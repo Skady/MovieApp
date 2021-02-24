@@ -1,6 +1,6 @@
 package com.example.cinemaapp.Models
 
-class DataManager {
+object DataManager {
     val movies = ArrayList<MovieInfo>()
 
     init {
@@ -25,7 +25,7 @@ class DataManager {
         movies.add(movie)
 
         movie = MovieInfo(
-                "soy leyenda",
+                "Harry potter",
                 "https://image.tmdb.org/t/p/original/bmemsraCG1kIthY74NjDnnLRT2Q.jpg",
                 "A portal transports Lt. Artemis and an elite unit of soldiers to a strange world where powerful monsters rule with deadly ferocity. Faced with relentless danger, the team encounters a mysterious hunter who may be their only hope to find a way home.",
                 "5.3"
@@ -37,6 +37,22 @@ class DataManager {
                 "https://image.tmdb.org/t/p/original/bmemsraCG1kIthY74NjDnnLRT2Q.jpg",
                 "A portal transports Lt. Artemis and an elite unit of soldiers to a strange world where powerful monsters rule with deadly ferocity. Faced with relentless danger, the team encounters a mysterious hunter who may be their only hope to find a way home.",
                 "9.3"
+        )
+        movies.add(movie)
+
+        movie = MovieInfo(
+            "Harry potter",
+            "https://image.tmdb.org/t/p/original/bmemsraCG1kIthY74NjDnnLRT2Q.jpg",
+            "A portal transports Lt. Artemis and an elite unit of soldiers to a strange world where powerful monsters rule with deadly ferocity. Faced with relentless danger, the team encounters a mysterious hunter who may be their only hope to find a way home.",
+            "5.3"
+        )
+        movies.add(movie)
+
+        movie = MovieInfo(
+            "Batallas letales",
+            "https://image.tmdb.org/t/p/original/bmemsraCG1kIthY74NjDnnLRT2Q.jpg",
+            "A portal transports Lt. Artemis and an elite unit of soldiers to a strange world where powerful monsters rule with deadly ferocity. Faced with relentless danger, the team encounters a mysterious hunter who may be their only hope to find a way home.",
+            "9.3"
         )
         movies.add(movie)
     }

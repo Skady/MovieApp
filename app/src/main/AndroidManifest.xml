@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CinemaApp">
-        <activity android:name=".MovieDetailsActivity"></activity>
+        <activity android:name=".ContentMainListAllMovies"></activity>
         <activity
-            android:name=".ListMoviesActivity"
-            android:label="@string/title_activity_list_movies"
+            android:name=".ListAllMoviesActivity"
+            android:label="@string/title_activity_list_all_movies"
             android:theme="@style/Theme.CinemaApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MovieDetailsActivity" />
+        <activity
+            android:name=".ListMoviesActivity"
+            android:label="@string/title_activity_list_movies"
+            android:theme="@style/Theme.CinemaApp.NoActionBar"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
