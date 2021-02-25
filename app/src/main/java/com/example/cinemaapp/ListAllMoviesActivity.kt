@@ -9,20 +9,26 @@ import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import com.example.cinemaapp.Models.DataManager
+import com.example.cinemaapp.Models.MovieModel
+import com.example.cinemaapp.Models.MovieResponse
+import com.example.cinemaapp.Services.MoviesAPI
+import com.example.cinemaapp.Services.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ListAllMoviesActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    var popularMoviesList: MutableList<MovieModel> = mutableListOf()
 
     private val moviesLayoutManager by lazy {
        //GridLayoutManager(this, 2)
@@ -30,7 +36,7 @@ class ListAllMoviesActivity : AppCompatActivity() {
     }
 
     private val moviesRecyclerAdapter by lazy {
-        MoviesRecyclerAdapter(this, DataManager.movies)
+        MoviesRecyclerAdapter(this, popularMoviesList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,11 +63,34 @@ class ListAllMoviesActivity : AppCompatActivity() {
         val toggle = ActionBarDrawerToggle (this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        getPopularMoviesList()
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
-        val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
+        /*val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
         recyclerListMoviesId.layoutManager = moviesLayoutManager
-        recyclerListMoviesId.adapter = moviesRecyclerAdapter
+        recyclerListMoviesId.adapter = moviesRecyclerAdapter*/
+    }
+
+    private fun getPopularMoviesList() {
+        var popularMoviesService = RetrofitClient.buildService(MoviesAPI::class.java)
+        var call = popularMoviesService.getPopularMoviesList()
+
+        RetrofitClient.buildService(MoviesAPI::class.java).getPopularMoviesList().enqueue(object : Callback<MovieResponse> {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                //TODO show error
+            }
+
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                for (i in response.body()?.results!!){
+                    popularMoviesList.add(i)
+                }
+
+                val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
+                recyclerListMoviesId.layoutManager = moviesLayoutManager
+                recyclerListMoviesId.adapter = moviesRecyclerAdapter
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
