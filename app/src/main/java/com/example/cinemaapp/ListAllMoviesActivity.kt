@@ -28,8 +28,8 @@ class ListAllMoviesActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val moviesLayoutManager by lazy {
-       //LinearLayoutManager(this)
        GridLayoutManager(this, 2)
+       //LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 
     private val moviesRecyclerAdapter by lazy {
