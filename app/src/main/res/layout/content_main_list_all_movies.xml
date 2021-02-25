@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="PELICULAS POPULARES"
+                    android:text="POPULAR MOVIES"
                     android:textColor="#F4F9FD"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="PELICULAS TOP RATED"
+                    android:text="TOP RATED MOVIES"
                     android:textColor="#F4EEEE"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="PELICULAS POR VENIR"
+                    android:text="UPCOMINGS MOVIES"
                     android:textColor="#F4EEEE"
                     android:textSize="15sp"
                     android:textStyle="bold" />
