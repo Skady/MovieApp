@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
-import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Services.MoviesAPI
@@ -85,7 +84,7 @@ class ListAllMoviesActivity : AppCompatActivity() {
                     popularMoviesList.add(i)
                 }
 
-                val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
+                val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListPopularMovies)
                 recyclerListMoviesId.layoutManager = moviesLayoutManager
                 recyclerListMoviesId.adapter = moviesRecyclerAdapter
             }
