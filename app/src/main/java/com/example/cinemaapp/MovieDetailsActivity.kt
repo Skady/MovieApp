@@ -2,6 +2,7 @@ package com.example.cinemaapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Models.DataManager
@@ -10,9 +11,6 @@ import kotlin.math.roundToInt
 
 class MovieDetailsActivity : AppCompatActivity() {
 
-    private var productPosition = 0
-    private val picasso = Picasso.get()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
@@ -20,12 +18,6 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun showMovie() {
-
-        val product = DataManager.movies[productPosition]
-        /*
-        editTextName.setText(product.name)
-        editTextType.setText(product.type)
-        editTextDescription.setText(product.description)*/
 
         val titleId = findViewById<TextView>(R.id.titleDetailTextView)
         titleId.setText(intent.getStringExtra(TITLE))
@@ -36,13 +28,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         val summaryId = findViewById<TextView>(R.id.summaryDetailTextView)
         summaryId.setText(intent.getStringExtra(SUMMARY))
 
-        //val titleDetailTextView = intent.getStringExtra(TITLE)
-        /*
-        summaryDetailTextView.text = intent.getStringExtra(SUMMARY)
-        ratingDetailTextView.text = intent.getStringExtra(SUMMARY)
-
-        titleDetailTextView.setText()*/
-
+        val imageDetailMovieID = findViewById<ImageView?>(R.id.detailImageView)
+        val urlImage = intent.getStringExtra(POSTER)
+        Picasso.get().load(urlImage).into(imageDetailMovieID)
         //ratingTextView.text = String.format(getString(R.string.rating),intent.getFloatExtra(RATING, 1f).roundToInt())
         /*picasso
             .load(RetrofitClient.TMDB_IMAGEURL + intent.getStringExtra(POSTER))
