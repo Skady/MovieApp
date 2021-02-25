@@ -29,6 +29,7 @@ class ListAllMoviesActivity : AppCompatActivity() {
 
     var popularMoviesList: MutableList<MovieModel> = mutableListOf()
     var topRatedMoviesList: MutableList<MovieModel> = mutableListOf()
+    var incomingMoviesList: MutableList<MovieModel> = mutableListOf()
 
     private val popularMoviesLayoutManager by lazy {
        //GridLayoutManager(this, 2)
@@ -45,6 +46,14 @@ class ListAllMoviesActivity : AppCompatActivity() {
 
     private val topRatedMoviesRecyclerAdapter by lazy {
         MoviesRecyclerAdapter(this, topRatedMoviesList)
+    }
+
+    private val incomingMoviesLayoutManager by lazy {
+        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    }
+
+    private val incomingMoviesRecyclerAdapter by lazy {
+        MoviesRecyclerAdapter(this, incomingMoviesList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +92,7 @@ class ListAllMoviesActivity : AppCompatActivity() {
     private fun getInformationFromAPI() {
         getPopularMoviesList()
         getTopRatedMoviesList()
+        getIncomingMoviesList()
     }
 
     private fun getPopularMoviesList() {
@@ -123,6 +133,24 @@ class ListAllMoviesActivity : AppCompatActivity() {
         })
     }
 
+    private fun getIncomingMoviesList() {
+        RetrofitClient.buildService(MoviesAPI::class.java).getIncomingRatedMoviesList().enqueue(object : Callback<MovieResponse> {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                //TODO show error
+            }
+
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                for (i in response.body()?.results!!){
+                    incomingMoviesList.add(i)
+                }
+
+                val recyclerIncomingListMoviesId = findViewById<RecyclerView>(R.id.recyclerListIncomingMovies)
+                recyclerIncomingListMoviesId.layoutManager = incomingMoviesLayoutManager
+                recyclerIncomingListMoviesId.adapter = incomingMoviesRecyclerAdapter
+            }
+
+        })
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.list_all_movies, menu)
