@@ -20,16 +20,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import com.example.cinemaapp.Models.DataManager
 
-//import kotlinx.android.synthetic.main.app_bar_main.*
-//import kotlinx.android.synthetic.main.activity_main.*
-
 class ListAllMoviesActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val moviesLayoutManager by lazy {
-       GridLayoutManager(this, 2)
-       //LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+       //GridLayoutManager(this, 2)
+       LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 
     private val moviesRecyclerAdapter by lazy {
