@@ -18,16 +18,17 @@ object DataManager {
 
         movie = MovieInfo(
                 "Batallas letales",
-                "https://image.tmdb.org/t/p/original/bmemsraCG1kIthY74NjDnnLRT2Q.jpg",
-                "A portal transports Lt. Artemis and an elite unit of soldiers to a strange world where powerful monsters rule with deadly ferocity. Faced with relentless danger, the team encounters a mysterious hunter who may be their only hope to find a way home.",
+                "https://image.tmdb.org/t/p/original/drulhSX7P5TQlEMQZ3JoXKSDEfz.jpg",
+                "Fear of Rain\",\n" +
+                        "            \"overview\": \"A teenage girl living with schizophrenia begins to suspect her neighbor has kidnapped a child. Her parents try desperately to help her live a normal life, without exposing their own tragic secrets, and the only person who believes her is Caleb – a boy she isn’t even sure exists.",
                 "6.3"
         )
         movies.add(movie)
 
         movie = MovieInfo(
                 "Harry potter",
-                "https://image.tmdb.org/t/p/original/bmemsraCG1kIthY74NjDnnLRT2Q.jpg",
-                "A portal transports Lt. Artemis and an elite unit of soldiers to a strange world where powerful monsters rule with deadly ferocity. Faced with relentless danger, the team encounters a mysterious hunter who may be their only hope to find a way home.",
+                "https://image.tmdb.org/t/p/original/xZ2KER2gOHbuHP2GJoODuXDSZCb.jpg",
+                "In the near future, a drone pilot is sent into a deadly militarized zone and must work with an android officer to locate a doomsday device.",
                 "5.3"
         )
         movies.add(movie)

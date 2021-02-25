@@ -4,13 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
+    android:backgroundTint="@color/black"
     tools:context=".MovieDetailsActivity">
 
+    <ImageView
+        android:id="@+id/detailImageView"
+        android:layout_width="163dp"
+        android:layout_height="239dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/poster" />
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/TitleText"
+        android:layout_width="79dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Movie"
+        android:textColor="#03A9F4"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/detailImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="81dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Rating"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/detailImageView"
+        app:layout_constraintTop_toBottomOf="@+id/titleDetailTextView" />
+
+    <TextView
+        android:id="@+id/editTextTextPersonName3"
+        android:layout_width="81dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Summary"
+        android:textColor="#03A9F4"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailImageView" />
+
+    <TextView
+        android:id="@+id/titleDetailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="soy details dfor movies "
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="251dp" />
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/detailImageView"
+        app:layout_constraintTop_toBottomOf="@+id/TitleText" />
+
+    <TextView
+        android:id="@+id/ratingDetailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FF9800"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/detailImageView"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+    <TextView
+        android:id="@+id/summaryDetailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
