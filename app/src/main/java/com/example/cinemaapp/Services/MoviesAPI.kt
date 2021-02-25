@@ -9,4 +9,6 @@ interface MoviesAPI {
     @GET("movie/popular?api_key=dc727792d53fac39b6e09ce16833db99&language=en-US")
     fun getPopularMoviesList(): Call<MovieResponse>
 
+    @GET("movie/top_rated?api_key=dc727792d53fac39b6e09ce16833db99&language=en-US")
+    fun getTopRatedMoviesList(): Call<MovieResponse>
 }

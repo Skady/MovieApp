@@ -28,14 +28,23 @@ class ListAllMoviesActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     var popularMoviesList: MutableList<MovieModel> = mutableListOf()
+    var topRatedMoviesList: MutableList<MovieModel> = mutableListOf()
 
-    private val moviesLayoutManager by lazy {
+    private val popularMoviesLayoutManager by lazy {
        //GridLayoutManager(this, 2)
        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 
-    private val moviesRecyclerAdapter by lazy {
+    private val popularMoviesRecyclerAdapter by lazy {
         MoviesRecyclerAdapter(this, popularMoviesList)
+    }
+
+    private val topRatedMoviesLayoutManager by lazy {
+        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    }
+
+    private val topRatedMoviesRecyclerAdapter by lazy {
+        MoviesRecyclerAdapter(this, topRatedMoviesList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +71,8 @@ class ListAllMoviesActivity : AppCompatActivity() {
         val toggle = ActionBarDrawerToggle (this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        getPopularMoviesList()
+        getInformationFromAPI()
+
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
         /*val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
@@ -70,10 +80,12 @@ class ListAllMoviesActivity : AppCompatActivity() {
         recyclerListMoviesId.adapter = moviesRecyclerAdapter*/
     }
 
-    private fun getPopularMoviesList() {
-        var popularMoviesService = RetrofitClient.buildService(MoviesAPI::class.java)
-        var call = popularMoviesService.getPopularMoviesList()
+    private fun getInformationFromAPI() {
+        getPopularMoviesList()
+        getTopRatedMoviesList()
+    }
 
+    private fun getPopularMoviesList() {
         RetrofitClient.buildService(MoviesAPI::class.java).getPopularMoviesList().enqueue(object : Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 //TODO show error
@@ -85,8 +97,27 @@ class ListAllMoviesActivity : AppCompatActivity() {
                 }
 
                 val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListPopularMovies)
-                recyclerListMoviesId.layoutManager = moviesLayoutManager
-                recyclerListMoviesId.adapter = moviesRecyclerAdapter
+                recyclerListMoviesId.layoutManager = popularMoviesLayoutManager
+                recyclerListMoviesId.adapter = popularMoviesRecyclerAdapter
+            }
+
+        })
+    }
+
+    private fun getTopRatedMoviesList() {
+        RetrofitClient.buildService(MoviesAPI::class.java).getTopRatedMoviesList().enqueue(object : Callback<MovieResponse> {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                //TODO show error
+            }
+
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                for (i in response.body()?.results!!){
+                    topRatedMoviesList.add(i)
+                }
+
+                val recyclerTopRatedListMoviesId = findViewById<RecyclerView>(R.id.recyclerListTopRatedMovies)
+                recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
+                recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
             }
 
         })
