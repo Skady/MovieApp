@@ -8,6 +8,17 @@
     android:backgroundTint="@color/black"
     tools:context=".MovieDetailsActivity">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/ic_favorite_grey_24"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/detailImageView"
         android:layout_width="163dp"
