@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cinemaapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CinemaApp">
+        <activity android:name=".FavouriteMoviesActivity"></activity>
         <activity
             android:name=".ListAllMoviesActivity"
             android:label="@string/title_activity_list_all_movies"
@@ -25,7 +26,7 @@
         <activity
             android:name=".ListMoviesActivity"
             android:label="@string/title_activity_list_movies"
-            android:theme="@style/Theme.CinemaApp.NoActionBar"></activity>
+            android:theme="@style/Theme.CinemaApp.NoActionBar" />
         <activity android:name=".MainActivity" />
     </application>
 
