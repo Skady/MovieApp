@@ -101,4 +101,16 @@ object DataManager {
         )
         movies.add(newMovie)
     }
+
+    public fun removeMovie(originalTitle: String) {
+        var moviesTMP: MutableList<MovieModel> = mutableListOf()
+
+        for(movie in movies)
+            if(originalTitle != movie.original_title)
+                moviesTMP.add(movie)
+
+        movies.clear()
+        movies = moviesTMP
+    }
+
 }

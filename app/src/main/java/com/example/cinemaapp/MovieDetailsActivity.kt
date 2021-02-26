@@ -40,6 +40,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             else {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
                 //delete from list
+                DataManager.removeMovie(title as String)
             }
         }
 
@@ -61,8 +62,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         val urlImage = intent.getStringExtra(COMPLETE_POSTER_PATH)
         Picasso.get().load(urlImage).into(imageDetailMovieID)
 
+        val titleElement = intent.getStringExtra(TITLE)
+
         val favButton = findViewById<Button>(R.id.favButton)
-        if(DataManager.findMovie(title as String) != null)
+        if(DataManager.findMovie(titleElement as String) != null)
             favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
         else
             favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
