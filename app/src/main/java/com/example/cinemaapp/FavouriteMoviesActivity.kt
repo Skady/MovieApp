@@ -33,9 +33,14 @@ class FavouriteMoviesActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(this)
         database.favMovies().getAll().observe(this, Observer {
             favouriteMoviesList.clear()
+            val unique = HashMap<String, Boolean>()
+
             for(movie in it)
                 if(DataManager.findMovie(movie.title as String) != null)
-                    favouriteMoviesList.add(movie)
+                    if(unique.contains(movie.title) == false) {
+                        favouriteMoviesList.add(movie)
+                        unique[movie.title] = true
+                    }
 
             val recyclerListMyFavouriteMoviesId = findViewById<RecyclerView>(R.id.recyclerListMyFavouriteMovies)
             recyclerListMyFavouriteMoviesId.layoutManager = favouriteMoviesLayoutManager
