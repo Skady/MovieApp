@@ -21,11 +21,11 @@ class FavouriteMoviesActivity : AppCompatActivity() {
 
     private val favouriteMoviesLayoutManager by lazy {
         GridLayoutManager(this, 2)
-        //LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 
     private val favouriteMoviesRecyclerAdapter by lazy {
-        MoviesRecyclerAdapter(this, favouriteMoviesList)
+        MoviesRecyclerAdapter(this, DataManager.movies)
+        //MoviesRecyclerAdapter(this, favouriteMoviesList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
