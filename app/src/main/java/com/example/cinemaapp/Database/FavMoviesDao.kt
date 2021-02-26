@@ -15,6 +15,11 @@ interface FavMoviesDao {
     @Insert
     fun insertAll(vararg favMovies: MovieModel)
 
+    /*
+    @Query("DELETE FROM favMovies WHERE title = :title")
+    fun deleteElement(title: String): LiveData<MovieModel>
+*/
+
     @Delete
     fun delete(movie: MovieModel)
 }

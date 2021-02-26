@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import com.example.cinemaapp.Database.AppDatabase
+import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
 
 class FavouriteMoviesActivity : AppCompatActivity() {
@@ -33,7 +34,8 @@ class FavouriteMoviesActivity : AppCompatActivity() {
         database.favMovies().getAll().observe(this, Observer {
             favouriteMoviesList.clear()
             for(movie in it)
-                favouriteMoviesList.add(movie)
+                if(DataManager.findMovie(movie.title as String) != null)
+                    favouriteMoviesList.add(movie)
 
             val recyclerListMyFavouriteMoviesId = findViewById<RecyclerView>(R.id.recyclerListMyFavouriteMovies)
             recyclerListMyFavouriteMoviesId.layoutManager = favouriteMoviesLayoutManager
