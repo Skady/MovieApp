@@ -29,12 +29,25 @@ class MoviesRecyclerAdapter(private val context: Context, private val movies: Mu
             itemView.setOnClickListener {
                 val movie = movies[position]
                 val intent = Intent(context, MovieDetailsActivity::class.java)
-                //intent.putExtra(EXTRA_PRODUCT_POSITION, moviePosition)
-                intent.putExtra(TITLE, movie.title)
-                intent.putExtra(SUMMARY, movie?.overview)
+
+                intent.putExtra(ADULT, movie.adult)
+                intent.putExtra(BACKDROP_PATH, movie.backdrop_path)
+                intent.putExtra(ID, movie.id)
+                intent.putExtra(ORIGINAL_LANGUAGE, movie.original_language)
+                intent.putExtra(ORIGINAL_TITLE, movie.original_title)
+                intent.putExtra(OVERVIEW, movie.overview)
+                intent.putExtra(POPULARITY, movie.popularity)
+                intent.putExtra(POSTER_PATH, movie.poster_path)
+
                 val urlDetailImage = "https://image.tmdb.org/t/p/original" + movie?.poster_path
-                intent.putExtra(POSTER, urlDetailImage)
-                intent.putExtra(RATING, movie?.vote_average)
+                intent.putExtra(COMPLETE_POSTER_PATH, urlDetailImage)
+
+                intent.putExtra(RELEASE_DATE, movie.release_date)
+                intent.putExtra(TITLE, movie.title)
+                intent.putExtra(VIDEO, movie.video)
+                intent.putExtra(VOTE_AVERAGE, movie.vote_average)
+                intent.putExtra(VOTE_COUNT, movie.vote_count)
+
                 context.startActivity(intent)
             }
         }
