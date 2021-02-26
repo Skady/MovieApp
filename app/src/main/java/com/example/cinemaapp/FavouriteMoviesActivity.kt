@@ -2,10 +2,12 @@ package com.example.cinemaapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
+import com.example.cinemaapp.Database.AppDatabase
 import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
@@ -32,7 +34,13 @@ class FavouriteMoviesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite_movies)
 
-        getInformationFromDatabase()
+        val database = AppDatabase.getDatabase(this)
+
+        database.favMovies().getAll().observe(this, Observer {
+            favouriteMoviesList = it.toMutableList()
+        })
+
+        //getInformationFromDatabase()
     }
 
     private fun getInformationFromDatabase() {
