@@ -21,82 +21,55 @@ class MovieDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_details)
 
         val favButton = findViewById<Button>(R.id.favButton)
-        val database = AppDatabase.getDatabase(this)
+
 
         title = intent.getStringExtra(TITLE)
         favButton.setOnClickListener {
             favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
-            CoroutineScope(Dispatchers.IO).launch {
-                val newMovie = MovieModel(
-                    intent.getStringExtra(ADULT),
-                    intent.getStringExtra(BACKDROP_PATH),
-                    intent.getStringExtra(ID),
-                    intent.getStringExtra(ORIGINAL_LANGUAGE),
-                    intent.getStringExtra(ORIGINAL_TITLE),
-                    intent.getStringExtra(OVERVIEW),
-                    intent.getStringExtra(POPULARITY),
-                    intent.getStringExtra(POSTER_PATH),
-                    intent.getStringExtra(RELEASE_DATE),
-                    intent.getStringExtra(TITLE),
-                    intent.getStringExtra(VIDEO),
-                    intent.getStringExtra(VOTE_AVERAGE),
-                    intent.getStringExtra(VOTE_COUNT)
-                )
-                database.favMovies().insertAll(newMovie)
-
-                this@MovieDetailsActivity.finish()
-                /*
-            if(DataManager.findMovie(title as String) == null) {
-                favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
-                CoroutineScope(Dispatchers.IO).launch {
-                    val newMovie = MovieModel(
-                        intent.getStringExtra(ADULT),
-                        intent.getStringExtra(BACKDROP_PATH),
-                        intent.getStringExtra(ID),
-                        intent.getStringExtra(ORIGINAL_LANGUAGE),
-                        intent.getStringExtra(ORIGINAL_TITLE),
-                        intent.getStringExtra(OVERVIEW),
-                        intent.getStringExtra(POPULARITY),
-                        intent.getStringExtra(POSTER_PATH),
-                        intent.getStringExtra(RELEASE_DATE),
-                        intent.getStringExtra(TITLE),
-                        intent.getStringExtra(VIDEO),
-                        intent.getStringExtra(VOTE_AVERAGE),
-                        intent.getStringExtra(VOTE_COUNT)
-                    )
-                    database.favMovies().insertAll(newMovie)
-
-                    this@MovieDetailsActivity.finish()
-                }
-
-                //add to list
-                DataManager.addMovie(
-                    intent.getStringExtra(ADULT),
-                    intent.getStringExtra(BACKDROP_PATH),
-                    intent.getStringExtra(ID),
-                    intent.getStringExtra(ORIGINAL_LANGUAGE),
-                    intent.getStringExtra(ORIGINAL_TITLE),
-                    intent.getStringExtra(OVERVIEW),
-                    intent.getStringExtra(POPULARITY),
-                    intent.getStringExtra(POSTER_PATH),
-                    intent.getStringExtra(RELEASE_DATE),
-                    intent.getStringExtra(TITLE),
-                    intent.getStringExtra(VIDEO),
-                    intent.getStringExtra(VOTE_AVERAGE),
-                    intent.getStringExtra(VOTE_COUNT)
-                )
-
+            val isInDB = searchMovieInDB();
+            if(isInDB == false) {
+                addMovieToFavList()
             }
             else {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
                 //delete from list
                 DataManager.removeMovie(title as String)
             }
-            */
-            }
         }
 
         showMovie()
+    }
+
+    private fun searchMovieInDB(): Boolean {
+        val database = AppDatabase.getDatabase(this)
+        val titleElement: String? = intent.getStringExtra(TITLE)
+        if (titleElement != null) {
+            database.favMovies().get(titleElement)
+        }
+        return false
+    }
+
+    private fun addMovieToFavList() {
+        val database = AppDatabase.getDatabase(this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val newMovie = MovieModel(
+                intent.getStringExtra(ADULT),
+                intent.getStringExtra(BACKDROP_PATH),
+                intent.getStringExtra(ID),
+                intent.getStringExtra(ORIGINAL_LANGUAGE),
+                intent.getStringExtra(ORIGINAL_TITLE),
+                intent.getStringExtra(OVERVIEW),
+                intent.getStringExtra(POPULARITY),
+                intent.getStringExtra(POSTER_PATH),
+                intent.getStringExtra(RELEASE_DATE),
+                intent.getStringExtra(TITLE),
+                intent.getStringExtra(VIDEO),
+                intent.getStringExtra(VOTE_AVERAGE),
+                intent.getStringExtra(VOTE_COUNT)
+            )
+            database.favMovies().insertAll(newMovie)
+        }
     }
 
     private fun showMovie() {
