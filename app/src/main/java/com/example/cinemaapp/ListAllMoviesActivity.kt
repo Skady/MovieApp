@@ -18,6 +18,8 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
+import com.example.cinemaapp.Database.AppDatabase
+import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Services.MoviesAPI
@@ -25,6 +27,7 @@ import com.example.cinemaapp.Services.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.lifecycle.Observer
 
 class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -85,6 +88,10 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
         navView.setNavigationItemSelectedListener(this)
 
+        if(FIRST_TIME == 0) {
+            fillMap()
+            FIRST_TIME = 1
+        }
         getInformationFromAPI()
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
@@ -92,6 +99,21 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         /*val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
         recyclerListMoviesId.layoutManager = moviesLayoutManager
         recyclerListMoviesId.adapter = moviesRecyclerAdapter*/
+    }
+
+    private fun fillMap() {
+        val database = AppDatabase.getDatabase(this)
+        database.favMovies().getAll().observe(this, Observer {
+            DataManager.movies.clear();
+            val unique = HashMap<String, Boolean>()
+
+            for(movie in it) {
+                if (unique.contains(movie.title) == false) {
+                    DataManager.movies.add(movie)
+                    unique.put(movie.title.toString(), true)
+                }
+            }
+        })
     }
 
     private fun getInformationFromAPI() {
