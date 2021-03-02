@@ -28,10 +28,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import androidx.lifecycle.Observer
+import com.example.cinemaapp.ViewModels.ListAllMoviesViewModel
+import androidx.lifecycle.ViewModelProvider
 
 class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var viewModel: ListAllMoviesViewModel
 
     var popularMoviesList: MutableList<MovieModel> = mutableListOf()
     var topRatedMoviesList: MutableList<MovieModel> = mutableListOf()
@@ -65,6 +68,9 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_all_movies)
+
+        viewModel = ViewModelProvider(this).get(ListAllMoviesViewModel::class.java)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -123,60 +129,27 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     }
 
     private fun getPopularMoviesList() {
-        RetrofitClient.buildService(MoviesAPI::class.java).getPopularMoviesList().enqueue(object : Callback<MovieResponse> {
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                //TODO show error
-            }
+        popularMoviesList = viewModel.getPopularMoviesList()
 
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                for (i in response.body()?.results!!){
-                    popularMoviesList.add(i)
-                }
-
-                val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListPopularMovies)
-                recyclerListMoviesId.layoutManager = popularMoviesLayoutManager
-                recyclerListMoviesId.adapter = popularMoviesRecyclerAdapter
-            }
-
-        })
+        val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListPopularMovies)
+        recyclerListMoviesId.layoutManager = popularMoviesLayoutManager
+        recyclerListMoviesId.adapter = popularMoviesRecyclerAdapter
     }
 
     private fun getTopRatedMoviesList() {
-        RetrofitClient.buildService(MoviesAPI::class.java).getTopRatedMoviesList().enqueue(object : Callback<MovieResponse> {
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                //TODO show error
-            }
+        topRatedMoviesList = viewModel.getTopRatedMoviesList()
 
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                for (i in response.body()?.results!!){
-                    topRatedMoviesList.add(i)
-                }
-
-                val recyclerTopRatedListMoviesId = findViewById<RecyclerView>(R.id.recyclerListTopRatedMovies)
-                recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
-                recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
-            }
-
-        })
+        val recyclerTopRatedListMoviesId = findViewById<RecyclerView>(R.id.recyclerListTopRatedMovies)
+        recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
+        recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
     }
 
     private fun getIncomingMoviesList() {
-        RetrofitClient.buildService(MoviesAPI::class.java).getIncomingRatedMoviesList().enqueue(object : Callback<MovieResponse> {
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                //TODO show error
-            }
+        incomingMoviesList = viewModel.getIncomingMoviesList()
 
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                for (i in response.body()?.results!!){
-                    incomingMoviesList.add(i)
-                }
-
-                val recyclerIncomingListMoviesId = findViewById<RecyclerView>(R.id.recyclerListIncomingMovies)
-                recyclerIncomingListMoviesId.layoutManager = incomingMoviesLayoutManager
-                recyclerIncomingListMoviesId.adapter = incomingMoviesRecyclerAdapter
-            }
-
-        })
+        val recyclerTopRatedListMoviesId = findViewById<RecyclerView>(R.id.recyclerListTopRatedMovies)
+        recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
+        recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
