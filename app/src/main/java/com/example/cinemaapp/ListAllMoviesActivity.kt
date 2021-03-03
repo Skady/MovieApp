@@ -1,5 +1,6 @@
 package com.example.cinemaapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -30,20 +31,27 @@ import retrofit2.Response
 import androidx.lifecycle.Observer
 import com.example.cinemaapp.ViewModels.ListAllMoviesViewModel
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.content_main_list_all_movies.*
 
 class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var context: Context
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: ListAllMoviesViewModel
 
+    private lateinit var adapter: MoviesRecyclerAdapter
+
+    private val popularMoviesLayoutManager by lazy {
+        //GridLayoutManager(this, 2)
+        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    }
+/*
     var popularMoviesList: MutableList<MovieModel> = mutableListOf()
     var topRatedMoviesList: MutableList<MovieModel> = mutableListOf()
     var incomingMoviesList: MutableList<MovieModel> = mutableListOf()
 
-    private val popularMoviesLayoutManager by lazy {
-       //GridLayoutManager(this, 2)
-       LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    }
+
 
     private val popularMoviesRecyclerAdapter by lazy {
         MoviesRecyclerAdapter(this, popularMoviesList)
@@ -64,10 +72,12 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     private val incomingMoviesRecyclerAdapter by lazy {
         MoviesRecyclerAdapter(this, incomingMoviesList)
     }
-
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_all_movies)
+
+        context = this@ListAllMoviesActivity
 
         viewModel = ViewModelProvider(this).get(ListAllMoviesViewModel::class.java)
 
@@ -98,7 +108,22 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             fillMap()
             FIRST_TIME = 1
         }
-        getInformationFromAPI()
+
+        /*
+        viewModel.popularMovieList.observe(this, Observer {
+            adapter.setLocationList(it)
+        })
+         */
+
+       // getInformationFromAPI()
+
+        viewModel.popularMovieList.observe(this, Observer {
+            adapter.setMovieList(it)
+        })
+
+        adapter = MoviesRecyclerAdapter(this)
+        recyclerListPopularMovies.adapter = adapter
+        recyclerListPopularMovies.layoutManager = popularMoviesLayoutManager
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
@@ -123,11 +148,15 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     }
 
     private fun getInformationFromAPI() {
+        viewModel.loadPopularMovieList()
+
+        /*
         getPopularMoviesList()
         getTopRatedMoviesList()
         getIncomingMoviesList()
+         */
     }
-
+/*
     private fun getPopularMoviesList() {
         popularMoviesList = viewModel.getPopularMoviesList()
 
@@ -151,7 +180,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
         recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
     }
-
+*/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.list_all_movies, menu)

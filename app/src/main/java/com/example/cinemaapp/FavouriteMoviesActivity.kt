@@ -13,7 +13,7 @@ import com.example.cinemaapp.Models.MovieModel
 class FavouriteMoviesActivity : AppCompatActivity() {
 
     var favouriteMoviesList: MutableList<MovieModel> = mutableListOf()
-
+/*
     private val favouriteMoviesLayoutManager by lazy {
         GridLayoutManager(this, 2)
     }
@@ -47,4 +47,5 @@ class FavouriteMoviesActivity : AppCompatActivity() {
             recyclerListMyFavouriteMoviesId.adapter = favouriteMoviesRecyclerAdapter
         })
     }
+ */
 }
