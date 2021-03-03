@@ -6,9 +6,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.ViewModelProvider
 import com.example.cinemaapp.Database.AppDatabase
 import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
+import com.example.cinemaapp.ViewModels.FavouriteMoviesViewModel
+import com.example.cinemaapp.ViewModels.MovieDetailViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +19,13 @@ import kotlinx.coroutines.launch
 
 class MovieDetailsActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: MovieDetailViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
+
+        viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
 
         val favButton = findViewById<Button>(R.id.favButton)
 
@@ -26,8 +33,22 @@ class MovieDetailsActivity : AppCompatActivity() {
         favButton.setOnClickListener {
             if(DataManager.findMovie(title as String) == null) {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
-                addMovieToFavList()
-                addToDataManager()
+                val newMovie = MovieModel(
+                    intent.getStringExtra(ADULT),
+                    intent.getStringExtra(BACKDROP_PATH),
+                    intent.getStringExtra(ID),
+                    intent.getStringExtra(ORIGINAL_LANGUAGE),
+                    intent.getStringExtra(ORIGINAL_TITLE),
+                    intent.getStringExtra(OVERVIEW),
+                    intent.getStringExtra(POPULARITY),
+                    intent.getStringExtra(POSTER_PATH),
+                    intent.getStringExtra(RELEASE_DATE),
+                    intent.getStringExtra(TITLE),
+                    intent.getStringExtra(VIDEO),
+                    intent.getStringExtra(VOTE_AVERAGE),
+                    intent.getStringExtra(VOTE_COUNT)
+                )
+                viewModel.addMovieToFavList(newMovie)
             }
             else {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
@@ -61,46 +82,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         database.favMoviesDao().delete(selectedMovie);
     }
 
-    private fun addMovieToFavList() {
-        val database = AppDatabase.getDatabase(this)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val newMovie = MovieModel(
-                intent.getStringExtra(ADULT),
-                intent.getStringExtra(BACKDROP_PATH),
-                intent.getStringExtra(ID),
-                intent.getStringExtra(ORIGINAL_LANGUAGE),
-                intent.getStringExtra(ORIGINAL_TITLE),
-                intent.getStringExtra(OVERVIEW),
-                intent.getStringExtra(POPULARITY),
-                intent.getStringExtra(POSTER_PATH),
-                intent.getStringExtra(RELEASE_DATE),
-                intent.getStringExtra(TITLE),
-                intent.getStringExtra(VIDEO),
-                intent.getStringExtra(VOTE_AVERAGE),
-                intent.getStringExtra(VOTE_COUNT)
-            )
-            database.favMoviesDao().insertAll(newMovie)
-        }
-    }
-
-    private fun addToDataManager() {
-        DataManager.addMovie(
-            intent.getStringExtra(ADULT),
-            intent.getStringExtra(BACKDROP_PATH),
-            intent.getStringExtra(ID),
-            intent.getStringExtra(ORIGINAL_LANGUAGE),
-            intent.getStringExtra(ORIGINAL_TITLE),
-            intent.getStringExtra(OVERVIEW),
-            intent.getStringExtra(POPULARITY),
-            intent.getStringExtra(POSTER_PATH),
-            intent.getStringExtra(RELEASE_DATE),
-            intent.getStringExtra(TITLE),
-            intent.getStringExtra(VIDEO),
-            intent.getStringExtra(VOTE_AVERAGE),
-            intent.getStringExtra(VOTE_COUNT)
-        )
-    }
     private fun showMovie() {
 
         val titleId = findViewById<TextView>(R.id.titleDetailTextView)
