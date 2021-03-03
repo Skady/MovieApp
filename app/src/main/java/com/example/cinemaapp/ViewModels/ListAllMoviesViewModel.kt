@@ -23,7 +23,6 @@ class ListAllMoviesViewModel(application: Application) : AndroidViewModel(applic
     val popularMovieList: LiveData<List<MovieModel>>
 
     init {
-        repository.loadPopularMoviesList()
         this.popularMovieList = repository.popularMovieList
     }
 

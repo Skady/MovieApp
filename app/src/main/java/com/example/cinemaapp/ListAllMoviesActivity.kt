@@ -42,8 +42,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     private lateinit var adapter: MoviesRecyclerAdapter
 
-    private val popularMoviesLayoutManager by lazy {
-        //GridLayoutManager(this, 2)
+    private val horizontalMovieListLayoutManager by lazy {
         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 /*
@@ -114,16 +113,8 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             adapter.setLocationList(it)
         })
          */
-
-       // getInformationFromAPI()
-
-        viewModel.popularMovieList.observe(this, Observer {
-            adapter.setMovieList(it)
-        })
-
         adapter = MoviesRecyclerAdapter(this)
-        recyclerListPopularMovies.adapter = adapter
-        recyclerListPopularMovies.layoutManager = popularMoviesLayoutManager
+        getInformationFromAPI()
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
@@ -148,13 +139,21 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     }
 
     private fun getInformationFromAPI() {
-        viewModel.loadPopularMovieList()
-
-        /*
         getPopularMoviesList()
+        /*
         getTopRatedMoviesList()
         getIncomingMoviesList()
          */
+    }
+    private fun getPopularMoviesList() {
+        viewModel.loadPopularMovieList()
+
+        viewModel.popularMovieList.observe(this, Observer {
+            adapter.setMovieList(it)
+        })
+
+        recyclerListPopularMovies.adapter = adapter
+        recyclerListPopularMovies.layoutManager = horizontalMovieListLayoutManager
     }
 /*
     private fun getPopularMoviesList() {
