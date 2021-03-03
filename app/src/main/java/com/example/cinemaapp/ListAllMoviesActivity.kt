@@ -41,33 +41,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     private val upcomingMoviesLayoutManager by lazy {
         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
-/*
-    var popularMoviesList: MutableList<MovieModel> = mutableListOf()
-    var topRatedMoviesList: MutableList<MovieModel> = mutableListOf()
-    var incomingMoviesList: MutableList<MovieModel> = mutableListOf()
 
-
-
-    private val popularMoviesRecyclerAdapter by lazy {
-        MoviesRecyclerAdapter(this, popularMoviesList)
-    }
-
-    private val topRatedMoviesLayoutManager by lazy {
-        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    }
-
-    private val topRatedMoviesRecyclerAdapter by lazy {
-        MoviesRecyclerAdapter(this, topRatedMoviesList)
-    }
-
-    private val incomingMoviesLayoutManager by lazy {
-        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    }
-
-    private val incomingMoviesRecyclerAdapter by lazy {
-        MoviesRecyclerAdapter(this, incomingMoviesList)
-    }
-*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_all_movies)
@@ -108,9 +82,6 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
-        /*val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListMovies)
-        recyclerListMoviesId.layoutManager = moviesLayoutManager
-        recyclerListMoviesId.adapter = moviesRecyclerAdapter*/
     }
 
     private fun fillMap() {
@@ -160,31 +131,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             recyclerListUpcomingMovies.layoutManager = upcomingMoviesLayoutManager
         })
     }
-/*
-    private fun getPopularMoviesList() {
-        popularMoviesList = viewModel.getPopularMoviesList()
 
-        val recyclerListMoviesId = findViewById<RecyclerView>(R.id.recyclerListPopularMovies)
-        recyclerListMoviesId.layoutManager = popularMoviesLayoutManager
-        recyclerListMoviesId.adapter = popularMoviesRecyclerAdapter
-    }
-
-    private fun getTopRatedMoviesList() {
-        topRatedMoviesList = viewModel.getTopRatedMoviesList()
-
-        val recyclerTopRatedListMoviesId = findViewById<RecyclerView>(R.id.recyclerListTopRatedMovies)
-        recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
-        recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
-    }
-
-    private fun getIncomingMoviesList() {
-        incomingMoviesList = viewModel.getIncomingMoviesList()
-
-        val recyclerTopRatedListMoviesId = findViewById<RecyclerView>(R.id.recyclerListTopRatedMovies)
-        recyclerTopRatedListMoviesId.layoutManager = topRatedMoviesLayoutManager
-        recyclerTopRatedListMoviesId.adapter = topRatedMoviesRecyclerAdapter
-    }
-*/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.list_all_movies, menu)
