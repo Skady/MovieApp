@@ -2,32 +2,34 @@ package com.example.cinemaapp.ViewModels
 
 import android.app.Application
 import androidx.lifecycle.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import com.example.cinemaapp.Models.MovieModel
-import com.example.cinemaapp.Models.MovieResponse
-import com.example.cinemaapp.R
 import com.example.cinemaapp.Repository.ListAllMoviesRepository
 //import com.example.cinemaapp.Repository.AllMoviesAPIRepository
-import com.example.cinemaapp.Services.MoviesAPI
-import com.example.cinemaapp.Services.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ListAllMoviesViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = ListAllMoviesRepository(application)
 
     val popularMovieList: LiveData<List<MovieModel>>
+    val topRatedMovieList: LiveData<List<MovieModel>>
+    val upcomingMovieList: LiveData<List<MovieModel>>
 
     init {
         this.popularMovieList = repository.popularMovieList
+        this.topRatedMovieList = repository.topRatedMoviesList
+        this.upcomingMovieList = repository.upcomingMoviesList
     }
 
     fun loadPopularMovieList(){
         repository.loadPopularMoviesList()
+    }
+
+    fun loadTopRatedMovieList(){
+        repository.loadTopRatedMovieList()
+    }
+
+    fun loadUpcomingMovieList(){
+        repository.loadUpcomingMovieList()
     }
 }
 /*

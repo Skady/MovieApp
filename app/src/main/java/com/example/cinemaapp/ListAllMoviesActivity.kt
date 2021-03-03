@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,17 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import com.example.cinemaapp.Database.AppDatabase
 import com.example.cinemaapp.Models.DataManager
-import com.example.cinemaapp.Models.MovieModel
-import com.example.cinemaapp.Models.MovieResponse
-import com.example.cinemaapp.Services.MoviesAPI
-import com.example.cinemaapp.Services.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import androidx.lifecycle.Observer
 import com.example.cinemaapp.ViewModels.ListAllMoviesViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -40,9 +30,15 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewModel: ListAllMoviesViewModel
 
-    private lateinit var adapter: MoviesRecyclerAdapter
+    private val popularMoviesLayoutManager by lazy {
+        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    }
 
-    private val horizontalMovieListLayoutManager by lazy {
+    private val topRatedMoviesLayoutManager by lazy {
+        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    }
+
+    private val upcomingMoviesLayoutManager by lazy {
         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 /*
@@ -108,12 +104,6 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             FIRST_TIME = 1
         }
 
-        /*
-        viewModel.popularMovieList.observe(this, Observer {
-            adapter.setLocationList(it)
-        })
-         */
-        adapter = MoviesRecyclerAdapter(this)
         getInformationFromAPI()
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
@@ -140,20 +130,35 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     private fun getInformationFromAPI() {
         getPopularMoviesList()
-        /*
         getTopRatedMoviesList()
-        getIncomingMoviesList()
-         */
+        getUpcomingMoviesList()
     }
+
     private fun getPopularMoviesList() {
         viewModel.loadPopularMovieList()
 
         viewModel.popularMovieList.observe(this, Observer {
-            adapter.setMovieList(it)
+            recyclerListPopularMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListPopularMovies.layoutManager = popularMoviesLayoutManager
         })
+    }
 
-        recyclerListPopularMovies.adapter = adapter
-        recyclerListPopularMovies.layoutManager = horizontalMovieListLayoutManager
+    private fun getTopRatedMoviesList() {
+        viewModel.loadTopRatedMovieList()
+
+        viewModel.topRatedMovieList.observe(this, Observer {
+            recyclerListTopRatedMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListTopRatedMovies.layoutManager = topRatedMoviesLayoutManager
+        })
+    }
+
+    private fun getUpcomingMoviesList() {
+        viewModel.loadUpcomingMovieList()
+
+        viewModel.upcomingMovieList.observe(this, Observer {
+            recyclerListUpcomingMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListUpcomingMovies.layoutManager = upcomingMoviesLayoutManager
+        })
     }
 /*
     private fun getPopularMoviesList() {

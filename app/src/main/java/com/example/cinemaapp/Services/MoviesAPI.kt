@@ -15,5 +15,5 @@ interface MoviesAPI {
     fun getTopRatedMoviesList(): Call<MovieResponse>
 
     @GET("movie/upcoming?api_key=dc727792d53fac39b6e09ce16833db99&language=en-US")
-    fun getIncomingRatedMoviesList(): Call<MovieResponse>
+    fun getUpcomingRatedMoviesList(): Call<MovieResponse>
 }

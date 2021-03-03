@@ -16,24 +16,24 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_movie_list.view.*
 
 //class MoviesRecyclerAdapter(private val context: Context, private val movies: MutableList<MovieModel>) :
-class MoviesRecyclerAdapter(private val context: Context) :
+
+class MoviesRecyclerAdapter(private val context: Context, private val movies: List<MovieModel> = ArrayList()) :
+//class MoviesRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<MoviesRecyclerAdapter.ViewHolder>() {
 
-    private var movies: List<MovieModel> = ArrayList()
-
+    //private var movies: List<MovieModel> = ArrayList()
+/*
     fun setMovieList(list: List<MovieModel>){
         this.movies = list
         notifyDataSetChanged()
     }
-
+*/
     override fun getItemCount() = movies.size
 
     private val layoutInflater = LayoutInflater.from(context)
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val textTitle = itemView.findViewById<TextView>(R.id.textViewTitle)
         val textTitle = itemView.textViewTitle!!
-        //val imageMovie = itemView.findViewById<ImageView?>(R.id.imageMovie)
         val imageMovie = itemView.imageMovie!!
         //var moviePosition = 0
 
