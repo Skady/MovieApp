@@ -6,9 +6,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemaapp.Database.AppDatabase
 import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
@@ -61,7 +58,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.getStringExtra(VOTE_COUNT)
         )
 
-        database.favMovies().delete(selectedMovie);
+        database.favMoviesDao().delete(selectedMovie);
     }
 
     private fun addMovieToFavList() {
@@ -83,7 +80,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                 intent.getStringExtra(VOTE_AVERAGE),
                 intent.getStringExtra(VOTE_COUNT)
             )
-            database.favMovies().insertAll(newMovie)
+            database.favMoviesDao().insertAll(newMovie)
         }
     }
 

@@ -74,7 +74,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         navView.setNavigationItemSelectedListener(this)
 
         if(FIRST_TIME == 0) {
-            fillMap()
+            //fillMap()
             FIRST_TIME = 1
         }
 
@@ -83,10 +83,10 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
     }
-
+/*
     private fun fillMap() {
         val database = AppDatabase.getDatabase(this)
-        database.favMovies().getAll().observe(this, Observer {
+        database.favMoviesDao().getAll().observe(this, Observer {
             DataManager.movies.clear();
             val unique = HashMap<String, Boolean>()
 
@@ -98,7 +98,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             }
         })
     }
-
+*/
     private fun getInformationFromAPI() {
         getPopularMoviesList()
         getTopRatedMoviesList()

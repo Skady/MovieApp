@@ -5,7 +5,7 @@ import androidx.room.*
 import com.example.cinemaapp.Models.MovieModel
 
 @Dao
-interface FavMoviesDao {
+interface FavouriteMovieListDao {
     @Query("SELECT * FROM favMovies")
     fun getAll(): LiveData<List<MovieModel>>
 
