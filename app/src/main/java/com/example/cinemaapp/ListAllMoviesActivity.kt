@@ -16,8 +16,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
-import com.example.cinemaapp.Database.AppDatabase
-import com.example.cinemaapp.Models.DataManager
 import androidx.lifecycle.Observer
 import com.example.cinemaapp.ViewModels.ListAllMoviesViewModel
 import androidx.lifecycle.ViewModelProvider

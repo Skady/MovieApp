@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.cinemaapp.Database.AppDatabase
 import com.example.cinemaapp.Models.MovieModel
-import androidx.lifecycle.Observer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,13 +23,12 @@ class FavouriteMoviesRepository(val application: Application) {
 
     fun addMovie(movie: MovieModel) {
         CoroutineScope(Dispatchers.IO).launch {
-            database.favMoviesDao().insertAll(movie)
+            database.favMoviesDao().insert(movie)
         }
     }
 
     fun removeMovie(movie: MovieModel) {
         CoroutineScope(Dispatchers.IO).launch {
-            //database.favMoviesDao().delete(movie.title as String)
             database.favMoviesDao().deleteElement(movie)
         }
     }

@@ -20,10 +20,4 @@ class MovieModel(
     val video: String?,
     val vote_average: String?,
     val vote_count: String?
-
-    /*
-    @PrimaryKey(autoGenerate = true)
-    var idMovie: Int = 0
-     */
-
 ) : Serializable

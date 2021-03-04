@@ -9,7 +9,6 @@ import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.ViewModels.MovieDetailViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_details.*
 
@@ -37,12 +36,10 @@ class MovieDetailsActivity : AppCompatActivity() {
             if(isInDB) {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
                 viewModel.removeMovieFromFavList(selectedMovie)
-                flagExist.setText("true from click")
             }
             else {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
                 viewModel.addMovieToFavList(selectedMovie)
-                flagExist.setText("false from click")
             }
         }
         showMovie()
@@ -79,14 +76,10 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         viewModel.getOneMovieFromFavList(title as String)
         viewModel.selectedMovieIsInDB.observe(this, Observer {
-            if(it) {
+            if(it)
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
-                flagExist.setText("true")
-            }
-            else {
+            else
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
-                flagExist.setText("false")
-            }
         })
 
         //for trailer

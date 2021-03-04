@@ -1,33 +1,19 @@
 package com.example.cinemaapp.Adapters
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cinemaapp.Models.MovieInfo
-
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.example.cinemaapp.*
 import com.example.cinemaapp.Models.MovieModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_movie_list.view.*
 
-//class MoviesRecyclerAdapter(private val context: Context, private val movies: MutableList<MovieModel>) :
-
 class MoviesRecyclerAdapter(private val context: Context, private val movies: List<MovieModel> = ArrayList()) :
-//class MoviesRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<MoviesRecyclerAdapter.ViewHolder>() {
 
-    //private var movies: List<MovieModel> = ArrayList()
-/*
-    fun setMovieList(list: List<MovieModel>){
-        this.movies = list
-        notifyDataSetChanged()
-    }
-*/
     override fun getItemCount() = movies.size
 
     private val layoutInflater = LayoutInflater.from(context)
@@ -35,7 +21,6 @@ class MoviesRecyclerAdapter(private val context: Context, private val movies: Li
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textTitle = itemView.textViewTitle!!
         val imageMovie = itemView.imageMovie!!
-        //var moviePosition = 0
 
         //manage click event
         init {
