@@ -87,6 +87,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         viewModel.getTrailerKey(movieID as String)
         viewModel.selectedMovieTrailerID.observe(this, Observer {
+            lifecycle.addObserver(youtube_player_view);
             youtube_player_view.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     val videoId = it
@@ -94,6 +95,5 @@ class MovieDetailsActivity : AppCompatActivity() {
                 }
             })
         })
-
     }
 }

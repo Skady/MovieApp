@@ -67,7 +67,10 @@ class ListAllMoviesRepository(val application: Application) {
             }
 
             override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
-                selectedMovieTrailerID.value = response.body()?.results?.get(0)?.key
+                if(response.body()?.results?.size == 0)
+                    selectedMovieTrailerID.value = "05DqIGS_koU"
+                else
+                    selectedMovieTrailerID.value = response.body()?.results?.get(0)?.key
             }
         })
     }
