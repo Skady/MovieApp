@@ -87,11 +87,18 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
         })
 
-        youtube_player_view.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "kP9TfCWaQT4"
-                youTubePlayer.loadVideo("kP9TfCWaQT4", 0f)
-            }
+        //for trailer
+        val movieID = intent.getStringExtra(ID)
+
+        viewModel.getTrailerKey(movieID as String)
+        viewModel.selectedMovieTrailerID.observe(this, Observer {
+            youtube_player_view.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId = it
+                    youTubePlayer.loadVideo(videoId, 0f)
+                }
+            })
         })
+
     }
 }

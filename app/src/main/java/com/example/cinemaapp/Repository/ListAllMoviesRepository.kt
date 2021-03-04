@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
+import com.example.cinemaapp.Models.VideoResponse
 import com.example.cinemaapp.Services.MoviesAPI
 import com.example.cinemaapp.Services.RetrofitClient
 import retrofit2.Call
@@ -17,6 +18,7 @@ class ListAllMoviesRepository(val application: Application) {
     val topRatedMoviesList = MutableLiveData<List<MovieModel>>()
     val upcomingMoviesList = MutableLiveData<List<MovieModel>>()
 
+    val selectedMovieTrailerID = MutableLiveData<String>()
 
     fun loadPopularMoviesList() {
         RetrofitClient.buildService(MoviesAPI::class.java).getPopularMoviesList().enqueue(object :
@@ -53,6 +55,19 @@ class ListAllMoviesRepository(val application: Application) {
 
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 upcomingMoviesList.value = response.body()?.results
+            }
+        })
+    }
+
+    fun getTrailerKey(movieID: String) {
+        RetrofitClient.buildService(MoviesAPI::class.java).getVideosList(movieID).enqueue(object :
+            Callback<VideoResponse> {
+            override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+                Toast.makeText(application, "Error while getting video list", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+                selectedMovieTrailerID.value = response.body()?.results?.get(0)?.key
             }
         })
     }
