@@ -24,6 +24,10 @@ interface FavouriteMovieListDao {
     @Query("SELECT EXISTS (SELECT 1 FROM favMovies WHERE title = :title)")
     fun exists(title: String): LiveData<Boolean>
 
+    @Query("DELETE FROM favMovies WHERE title = :title")
+    fun delete(title: String)
+
+    /*
     @Delete
-    fun delete(movie: MovieModel)
+    fun delete(movie: MovieModel)*/
 }
