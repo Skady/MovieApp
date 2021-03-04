@@ -21,6 +21,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
+        lifecycle.addObserver(youtube_player_view);
+
         viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
 
         var isInDB: Boolean = false
@@ -87,11 +89,11 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         viewModel.getTrailerKey(movieID as String)
         viewModel.selectedMovieTrailerID.observe(this, Observer {
-            lifecycle.addObserver(youtube_player_view);
             youtube_player_view.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     val videoId = it
                     youTubePlayer.loadVideo(videoId, 0f)
+                    youTubePlayer.pause()
                 }
             })
         })
