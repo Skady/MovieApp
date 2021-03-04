@@ -1,14 +1,18 @@
 package com.example.cinemaapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.ViewModels.MovieDetailViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.squareup.picasso.Picasso
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_movie_details.*
+
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -80,6 +84,13 @@ class MovieDetailsActivity : AppCompatActivity() {
             else {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
                 flagExist.setText("false")
+            }
+        })
+
+        youtube_player_view.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoId = "kP9TfCWaQT4"
+                youTubePlayer.loadVideo("kP9TfCWaQT4", 0f)
             }
         })
     }
