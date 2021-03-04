@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 class FavouriteMoviesRepository(val application: Application) {
 
     val favouriteMoviesList = MutableLiveData<List<MovieModel>>()
+    val selectedMovieIsInDB = MutableLiveData<Boolean>()
+
     val database = AppDatabase.getDatabase(application)
 
     fun loadFavouriteMoviesList() {
@@ -23,6 +25,18 @@ class FavouriteMoviesRepository(val application: Application) {
     fun addMovie(movie: MovieModel) {
         CoroutineScope(Dispatchers.IO).launch {
             database.favMoviesDao().insertAll(movie)
+        }
+    }
+
+    fun removeMovie(movie: MovieModel) {
+        CoroutineScope(Dispatchers.IO).launch {
+            database.favMoviesDao().delete(movie)
+        }
+    }
+
+    fun getMovie(title: String) {
+        database.favMoviesDao().exists(title).observeForever {
+            selectedMovieIsInDB.value = it
         }
     }
 }

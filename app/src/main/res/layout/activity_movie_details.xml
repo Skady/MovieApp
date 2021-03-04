@@ -113,4 +113,13 @@
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
+    <TextView
+        android:id="@+id/flagExist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nothing"
+        android:textColor="#FAF2F2"
+        app:layout_constraintEnd_toEndOf="@+id/favButton"
+        app:layout_constraintTop_toBottomOf="@+id/favButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

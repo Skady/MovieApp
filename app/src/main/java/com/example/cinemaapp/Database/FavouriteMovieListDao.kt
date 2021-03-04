@@ -10,15 +10,19 @@ interface FavouriteMovieListDao {
     fun getAll(): LiveData<List<MovieModel>>
 
     @Query("SELECT * FROM favMovies WHERE title = :title")
-    fun get(title: String): LiveData<MovieModel>
-
+    fun getOne(title: String): LiveData<MovieModel>
+/*
     @Insert
     fun insertAll(vararg favMovies: MovieModel)
-
-    /*
-    @Query("DELETE FROM favMovies WHERE title = :title")
-    fun deleteElement(title: String): LiveData<MovieModel>
 */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg movie: MovieModel)
+/*
+    @Query("DELETE FROM favMovies WHERE title = :title")
+    suspend fun deleteElement(title: String): LiveData<MovieModel>
+*/
+    @Query("SELECT EXISTS (SELECT 1 FROM favMovies WHERE title = :title)")
+    fun exists(title: String): LiveData<Boolean>
 
     @Delete
     fun delete(movie: MovieModel)

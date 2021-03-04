@@ -7,15 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
+import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import com.example.cinemaapp.Database.AppDatabase
 import com.example.cinemaapp.Models.DataManager
 import com.example.cinemaapp.Models.MovieModel
-import com.example.cinemaapp.ViewModels.FavouriteMoviesViewModel
 import com.example.cinemaapp.ViewModels.MovieDetailViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.activity_movie_details.*
+import kotlinx.android.synthetic.main.content_main_list_all_movies.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -30,39 +30,23 @@ class MovieDetailsActivity : AppCompatActivity() {
         val favButton = findViewById<Button>(R.id.favButton)
 
         title = intent.getStringExtra(TITLE)
+
         favButton.setOnClickListener {
+            val selectedMovie = getSelectedMovie()
+            //viewModel.removeMovieFromFavList(selectedMovie)
             if(DataManager.findMovie(title as String) == null) {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
-                val newMovie = MovieModel(
-                    intent.getStringExtra(ADULT),
-                    intent.getStringExtra(BACKDROP_PATH),
-                    intent.getStringExtra(ID),
-                    intent.getStringExtra(ORIGINAL_LANGUAGE),
-                    intent.getStringExtra(ORIGINAL_TITLE),
-                    intent.getStringExtra(OVERVIEW),
-                    intent.getStringExtra(POPULARITY),
-                    intent.getStringExtra(POSTER_PATH),
-                    intent.getStringExtra(RELEASE_DATE),
-                    intent.getStringExtra(TITLE),
-                    intent.getStringExtra(VIDEO),
-                    intent.getStringExtra(VOTE_AVERAGE),
-                    intent.getStringExtra(VOTE_COUNT)
-                )
-                viewModel.addMovieToFavList(newMovie)
+                viewModel.addMovieToFavList(selectedMovie)
             }
             else {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
-                DataManager.removeMovie(title as String)
-                //deleteMovieToFavList()
+                viewModel.removeMovieFromFavList(selectedMovie)
             }
         }
-
         showMovie()
     }
 
-    private fun deleteMovieToFavList() {
-        val database = AppDatabase.getDatabase(this)
-
+    private fun getSelectedMovie(): MovieModel {
         val selectedMovie = MovieModel(
             intent.getStringExtra(ADULT),
             intent.getStringExtra(BACKDROP_PATH),
@@ -78,32 +62,34 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.getStringExtra(VOTE_AVERAGE),
             intent.getStringExtra(VOTE_COUNT)
         )
-
-        database.favMoviesDao().delete(selectedMovie);
+        return selectedMovie
     }
 
     private fun showMovie() {
 
-        val titleId = findViewById<TextView>(R.id.titleDetailTextView)
-        titleId.setText(intent.getStringExtra(TITLE))
-
-        val ratingId = findViewById<TextView>(R.id.ratingDetailTextView)
-        ratingId.setText(intent.getStringExtra(VOTE_AVERAGE))
-
-        val summaryId = findViewById<TextView>(R.id.summaryDetailTextView)
-        summaryId.setText(intent.getStringExtra(OVERVIEW))
-
-        val imageDetailMovieID = findViewById<ImageView?>(R.id.detailImageView)
-        val urlImage = intent.getStringExtra(COMPLETE_POSTER_PATH)
-        Picasso.get().load(urlImage).into(imageDetailMovieID)
-
         val titleElement = intent.getStringExtra(TITLE)
 
-        val favButton = findViewById<Button>(R.id.favButton)
-        if(DataManager.findMovie(titleElement as String) != null)
-            favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
-        else
-            favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
+        titleDetailTextView.setText(titleElement)
+        ratingDetailTextView.setText(intent.getStringExtra(VOTE_AVERAGE))
+        summaryDetailTextView.setText(intent.getStringExtra(OVERVIEW))
+
+        val urlImage = intent.getStringExtra(COMPLETE_POSTER_PATH)
+        Picasso.get().load(urlImage).into(detailImageView)
+
+        viewModel.getOneMovieFromFavList(titleElement as String)
+
+        viewModel.selectedMovieIsInDB.observe(this, Observer {
+            flagExist.setText("entre")
+            if(it) {
+                favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_red_24)
+                flagExist.setText("true")
+            }
+            else {
+                favButton.background =
+                    AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
+                flagExist.setText("false")
+            }
+        })
     }
 
 }
