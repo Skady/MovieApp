@@ -27,7 +27,6 @@ interface FavouriteMovieListDao {
     @Query("DELETE FROM favMovies WHERE title = :title")
     fun delete(title: String)
 
-    /*
     @Delete
-    fun delete(movie: MovieModel)*/
+    fun deleteElement(movie: MovieModel)
 }

@@ -49,10 +49,12 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun getSelectedMovie(): MovieModel {
+        val id: String = intent.getStringExtra(ID) as String;
+
         val selectedMovie = MovieModel(
             intent.getStringExtra(ADULT),
             intent.getStringExtra(BACKDROP_PATH),
-            intent.getStringExtra(ID),
+            id,
             intent.getStringExtra(ORIGINAL_LANGUAGE),
             intent.getStringExtra(ORIGINAL_TITLE),
             intent.getStringExtra(OVERVIEW),

@@ -4,12 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "favMovies")
+@Entity(tableName = "favMovies", primaryKeys = ["id"])
 class MovieModel(
     val adult: String?,
     val backdrop_path: String?,
     //val genre_ids: List<Int>,
-    val id: String?,
+    val id: String,
     val original_language: String?,
     val original_title: String?,
     val overview: String?,
@@ -19,9 +19,11 @@ class MovieModel(
     val title: String?,
     val video: String?,
     val vote_average: String?,
-    val vote_count: String?,
+    val vote_count: String?
 
+    /*
     @PrimaryKey(autoGenerate = true)
     var idMovie: Int = 0
+     */
 
 ) : Serializable

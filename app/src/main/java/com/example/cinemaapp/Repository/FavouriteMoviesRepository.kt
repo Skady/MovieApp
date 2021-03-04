@@ -30,7 +30,8 @@ class FavouriteMoviesRepository(val application: Application) {
 
     fun removeMovie(movie: MovieModel) {
         CoroutineScope(Dispatchers.IO).launch {
-            database.favMoviesDao().delete(movie.title as String)
+            //database.favMoviesDao().delete(movie.title as String)
+            database.favMoviesDao().deleteElement(movie)
         }
     }
 

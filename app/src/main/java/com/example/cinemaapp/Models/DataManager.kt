@@ -21,7 +21,7 @@ object DataManager {
                 return movie
         return null
     }
-
+/*
     public fun addMovie(
         adult: String?,
         backdrop_path: String?,
@@ -54,7 +54,7 @@ object DataManager {
         )
         movies.add(newMovie)
     }
-
+*/
     public fun removeMovie(originalTitle: String) {
         var moviesTMP: MutableList<MovieModel> = mutableListOf()
 
