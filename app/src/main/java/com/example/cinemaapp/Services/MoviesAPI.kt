@@ -1,6 +1,5 @@
 package com.example.cinemaapp.Services
 
-import com.example.cinemaapp.Models.MovieDetail
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Models.VideoResponse
@@ -26,5 +25,5 @@ interface MoviesAPI {
     fun geMovieDetailFromIMDB(@Path("movieID") movieID: String): Call<MovieModel>
 
     @GET("/")
-    fun getMovieDetailFromOMDB(@Query("i") i: String, @Query("apikey") apikey: String): Call<MovieDetail>
+    fun getMovieDetailFromOMDB(@Query("i") i: String, @Query("apikey") apikey: String): Call<MovieModel>
 }

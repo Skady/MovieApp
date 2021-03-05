@@ -4,7 +4,6 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.cinemaapp.Database.AllMoviesDatabase
-import com.example.cinemaapp.Models.MovieDetail
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Models.VideoResponse
@@ -26,7 +25,7 @@ class ListAllMoviesRepository(val application: Application) {
     val topRatedMoviesList = MutableLiveData<List<MovieModel>>()
     val upcomingMoviesList = MutableLiveData<List<MovieModel>>()
 
-    val selectedMovieDetail = MutableLiveData<MovieDetail>()
+    val selectedMovieDetail = MutableLiveData<MovieModel>()
 
     val selectedMovieTrailerID = MutableLiveData<String>()
 
@@ -50,8 +49,7 @@ class ListAllMoviesRepository(val application: Application) {
                 it.video,
                 it.vote_average,
                 it.vote_count,
-                type,
-                    ""
+                type,"","","",""
             )
         }
     }
@@ -140,7 +138,7 @@ class ListAllMoviesRepository(val application: Application) {
             }
 
             override fun onResponse(call: Call<MovieModel>, response: Response<MovieModel>) {
-                selectedMovieImdb_ID.value = response.body()?.imdb_id
+                selectedMovieImdb_ID.value = response.body()?.imdbID
             }
 
         })
@@ -148,12 +146,12 @@ class ListAllMoviesRepository(val application: Application) {
 
     fun getMovieDetailOMDB(imdbID: String) {
         RetrofitClient.buildServiceOMDB(MoviesAPI::class.java).getMovieDetailFromOMDB(imdbID, "41bd1bcf").enqueue(object :
-            Callback<MovieDetail> {
-            override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
+            Callback<MovieModel> {
+            override fun onFailure(call: Call<MovieModel>, t: Throwable) {
                 Toast.makeText(application, "Movie detail could not be found", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: Call<MovieDetail>, response: Response<MovieDetail>) {
+            override fun onResponse(call: Call<MovieModel>, response: Response<MovieModel>) {
                 selectedMovieDetail.value = response.body()
             }
         })

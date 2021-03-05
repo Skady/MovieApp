@@ -3,7 +3,6 @@ package com.example.cinemaapp.ViewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.cinemaapp.Models.MovieDetail
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Repository.FavouriteMoviesRepository
 import com.example.cinemaapp.Repository.ListAllMoviesRepository
@@ -15,9 +14,7 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     val selectedMovieIsInDB: LiveData<Boolean>
     val selectedMovieTrailerID: LiveData<String>
     val selectedMovieImdb_ID: LiveData<String>
-    val selectedMovieDetail: LiveData<MovieDetail>
-
-
+    val selectedMovieDetail: LiveData<MovieModel>
 
     init {
         this.selectedMovieIsInDB = repository.selectedMovieIsInDB

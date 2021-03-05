@@ -63,7 +63,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.getStringExtra(VIDEO),
             intent.getStringExtra(VOTE_AVERAGE),
             intent.getStringExtra(VOTE_COUNT),
-            TYPE_FAVORITE_MOVIE, ""
+            TYPE_FAVORITE_MOVIE, "", "", "", ""
         )
         return selectedMovie
     }
@@ -104,7 +104,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             viewModel.getMovieDetailOMDB(imdbID as String)
             viewModel.selectedMovieDetail.observe(this, Observer {
-                imdbRatingDetailTextView.setText(it.imdbRating)
+                imdbRatingDetailTextView.setText(it.imdbID)
                 directorDetailTextView.setText(it.Director)
                 castDetailTextView.setText(it.Actors)
             })
