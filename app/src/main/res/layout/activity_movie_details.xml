@@ -11,8 +11,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-84dp">
+        tools:layout_editor_absoluteX="-117dp"
+        tools:layout_editor_absoluteY="67dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -58,8 +58,8 @@
                 android:id="@+id/editTextTextPersonName2"
                 android:layout_width="81dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Rating"
@@ -68,6 +68,20 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/detailImageView"
                 app:layout_constraintTop_toBottomOf="@+id/titleDetailTextView" />
+
+            <TextView
+                android:id="@+id/editTextTextPersonName4"
+                android:layout_width="81dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Director"
+                android:textColor="#03A9F4"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imdbRatingDetailTextView"
+                app:layout_constraintTop_toBottomOf="@+id/imdbRatingDetailTextView" />
 
             <TextView
                 android:id="@+id/editTextTextPersonName3"
@@ -88,6 +102,20 @@
                 android:id="@+id/editTextTextPersonName"
                 android:layout_width="81dp"
                 android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Cast"
+                android:textColor="#03A9F4"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/summaryDetailTextView"
+                app:layout_constraintTop_toBottomOf="@+id/summaryDetailTextView" />
+
+            <TextView
+                android:id="@+id/editTextTextPersonName5"
+                android:layout_width="81dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -96,7 +124,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/summaryDetailTextView"
-                app:layout_constraintTop_toBottomOf="@+id/summaryDetailTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/castDetailTextView" />
 
             <TextView
                 android:id="@+id/titleDetailTextView"
@@ -113,11 +141,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/TitleText" />
 
             <TextView
-                android:id="@+id/ratingDetailTextView"
+                android:id="@+id/imdbRatingDetailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textColor="#FF9800"
                 android:textSize="24sp"
@@ -137,20 +165,48 @@
                 app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
+            <TextView
+                android:id="@+id/castDetailTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+            <TextView
+                android:id="@+id/directorDetailTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 app:autoPlay="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5"
                 app:showFullScreenButton="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

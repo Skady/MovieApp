@@ -71,7 +71,6 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun showMovie() {
         titleDetailTextView.setText(intent.getStringExtra(TITLE))
-        ratingDetailTextView.setText(intent.getStringExtra(VOTE_AVERAGE))
         summaryDetailTextView.setText(intent.getStringExtra(OVERVIEW))
 
         val urlImage = intent.getStringExtra(COMPLETE_POSTER_PATH)
@@ -97,6 +96,16 @@ class MovieDetailsActivity : AppCompatActivity() {
                     youTubePlayer.pause()
                 }
             })
+        })
+        //TODO get movie detail from IMDB
+        //for movie detail
+        val imdbID = "tt3896198"
+
+        viewModel.getMovieDetailOMDB(imdbID as String)
+        viewModel.selectedMovieDetail.observe(this, Observer {
+            imdbRatingDetailTextView.setText(it.imdbRating)
+            directorDetailTextView.setText(it.Director)
+            castDetailTextView.setText(it.Actors)
         })
     }
 }

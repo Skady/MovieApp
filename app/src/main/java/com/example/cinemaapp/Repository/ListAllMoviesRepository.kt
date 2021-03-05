@@ -4,6 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.cinemaapp.Database.AllMoviesDatabase
+import com.example.cinemaapp.Models.MovieDetail
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Models.VideoResponse
@@ -24,6 +25,8 @@ class ListAllMoviesRepository(val application: Application) {
     val popularMovieList = MutableLiveData<List<MovieModel>>()
     val topRatedMoviesList = MutableLiveData<List<MovieModel>>()
     val upcomingMoviesList = MutableLiveData<List<MovieModel>>()
+
+    val selectedMovieDetail = MutableLiveData<MovieDetail>()
 
     val selectedMovieTrailerID = MutableLiveData<String>()
 
@@ -51,7 +54,7 @@ class ListAllMoviesRepository(val application: Application) {
     }
 
     fun loadPopularMoviesList() {
-        RetrofitClient.buildService(MoviesAPI::class.java).getPopularMoviesList().enqueue(object :
+        RetrofitClient.buildServiceIMDB(MoviesAPI::class.java).getPopularMoviesList().enqueue(object :
             Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 databaseAllMovies.allMoviesDao().getAllMovieWithTypeList(TYPE_POPULAR_MOVIE).observeForever {
@@ -71,7 +74,7 @@ class ListAllMoviesRepository(val application: Application) {
     }
 
     fun loadTopRatedMovieList() {
-        RetrofitClient.buildService(MoviesAPI::class.java).getTopRatedMoviesList().enqueue(object :
+        RetrofitClient.buildServiceIMDB(MoviesAPI::class.java).getTopRatedMoviesList().enqueue(object :
             Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 databaseAllMovies.allMoviesDao().getAllMovieWithTypeList(TYPE_TOP_RATED_MOVIE).observeForever {
@@ -91,7 +94,7 @@ class ListAllMoviesRepository(val application: Application) {
     }
 
     fun loadUpcomingMovieList() {
-        RetrofitClient.buildService(MoviesAPI::class.java).getUpcomingRatedMoviesList().enqueue(object :
+        RetrofitClient.buildServiceIMDB(MoviesAPI::class.java).getUpcomingRatedMoviesList().enqueue(object :
             Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 databaseAllMovies.allMoviesDao().getAllMovieWithTypeList(TYPE_UPCOMING_MOVIE).observeForever {
@@ -111,7 +114,7 @@ class ListAllMoviesRepository(val application: Application) {
     }
 
     fun getTrailerKey(movieID: String) {
-        RetrofitClient.buildService(MoviesAPI::class.java).getVideosList(movieID).enqueue(object :
+        RetrofitClient.buildServiceIMDB(MoviesAPI::class.java).getVideosList(movieID).enqueue(object :
             Callback<VideoResponse> {
             override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
                 Toast.makeText(application, "No network, trailer could not be load", Toast.LENGTH_SHORT).show()
@@ -122,6 +125,19 @@ class ListAllMoviesRepository(val application: Application) {
                     selectedMovieTrailerID.value = "05DqIGS_koU"
                 else
                     selectedMovieTrailerID.value = response.body()?.results?.get(0)?.key
+            }
+        })
+    }
+
+    fun getMovieDetailOMDB(imdbID: String) {
+        RetrofitClient.buildServiceOMDB(MoviesAPI::class.java).getMovieCompleteDetail(imdbID, "41bd1bcf").enqueue(object :
+            Callback<MovieDetail> {
+            override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
+                Toast.makeText(application, "Movie detail could not be found", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<MovieDetail>, response: Response<MovieDetail>) {
+                selectedMovieDetail.value = response.body()
             }
         })
     }
