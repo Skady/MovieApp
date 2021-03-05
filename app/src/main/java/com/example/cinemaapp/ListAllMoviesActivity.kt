@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import com.example.cinemaapp.ViewModels.ListAllMoviesViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.facebook.stetho.Stetho
+import kotlinx.android.synthetic.main.activity_list_all_movies.*
 import kotlinx.android.synthetic.main.content_main_list_all_movies.*
 
 class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -135,8 +136,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 startActivity(intentFavourite)
             }
         }
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawerLayout.closeDrawer(GravityCompat.START)
+        drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 }
