@@ -9,6 +9,9 @@ import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Models.VideoResponse
 import com.example.cinemaapp.Services.MoviesAPI
 import com.example.cinemaapp.Services.RetrofitClient
+import com.example.cinemaapp.TYPE_POPULAR_MOVIE
+import com.example.cinemaapp.TYPE_TOP_RATED_MOVIE
+import com.example.cinemaapp.TYPE_UPCOMING_MOVIE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +27,7 @@ class ListAllMoviesRepository(val application: Application) {
 
     val selectedMovieTrailerID = MutableLiveData<String>()
 
-    val database = AllMoviesDatabase.getDatabase(application)
+    private val databaseAllMovies = AllMoviesDatabase.getDatabase(application)
 
     private fun mapToAddType(movieList: List<MovieModel>, type: String) : List<MovieModel> {
         return movieList.map {
@@ -51,7 +54,7 @@ class ListAllMoviesRepository(val application: Application) {
         RetrofitClient.buildService(MoviesAPI::class.java).getPopularMoviesList().enqueue(object :
             Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                database.allMoviesDao().getAllMovieWithTypeList("POPULAR_MOVIE").observeForever {
+                databaseAllMovies.allMoviesDao().getAllMovieWithTypeList(TYPE_POPULAR_MOVIE).observeForever {
                     popularMovieList.value = it
                 }
             }
@@ -59,9 +62,9 @@ class ListAllMoviesRepository(val application: Application) {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 popularMovieList.value = response.body()?.results
 
-                val movieList: List<MovieModel> = mapToAddType(popularMovieList.value as List<MovieModel>, "POPULAR_MOVIE")
+                val movieList: List<MovieModel> = mapToAddType(popularMovieList.value as List<MovieModel>, TYPE_POPULAR_MOVIE)
                 CoroutineScope(Dispatchers.IO).launch {
-                    database.allMoviesDao().insertAll(movieList)
+                    databaseAllMovies.allMoviesDao().insertAll(movieList)
                 }
             }
         })
@@ -71,11 +74,18 @@ class ListAllMoviesRepository(val application: Application) {
         RetrofitClient.buildService(MoviesAPI::class.java).getTopRatedMoviesList().enqueue(object :
             Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Toast.makeText(application, "Error while accessing top rated movie list", Toast.LENGTH_SHORT).show()
+                databaseAllMovies.allMoviesDao().getAllMovieWithTypeList(TYPE_TOP_RATED_MOVIE).observeForever {
+                    topRatedMoviesList.value = it
+                }
             }
 
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 topRatedMoviesList.value = response.body()?.results
+
+                val movieList: List<MovieModel> = mapToAddType(topRatedMoviesList.value as List<MovieModel>, TYPE_TOP_RATED_MOVIE)
+                CoroutineScope(Dispatchers.IO).launch {
+                    databaseAllMovies.allMoviesDao().insertAll(movieList)
+                }
             }
         })
     }
@@ -84,11 +94,18 @@ class ListAllMoviesRepository(val application: Application) {
         RetrofitClient.buildService(MoviesAPI::class.java).getUpcomingRatedMoviesList().enqueue(object :
             Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Toast.makeText(application, "Error while accessing upcoming movie list", Toast.LENGTH_SHORT).show()
+                databaseAllMovies.allMoviesDao().getAllMovieWithTypeList(TYPE_UPCOMING_MOVIE).observeForever {
+                    upcomingMoviesList.value = it
+                }
             }
 
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 upcomingMoviesList.value = response.body()?.results
+
+                val movieList: List<MovieModel> = mapToAddType(upcomingMoviesList.value as List<MovieModel>, TYPE_UPCOMING_MOVIE)
+                CoroutineScope(Dispatchers.IO).launch {
+                    databaseAllMovies.allMoviesDao().insertAll(movieList)
+                }
             }
         })
     }
@@ -97,7 +114,7 @@ class ListAllMoviesRepository(val application: Application) {
         RetrofitClient.buildService(MoviesAPI::class.java).getVideosList(movieID).enqueue(object :
             Callback<VideoResponse> {
             override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-                Toast.makeText(application, "Error while getting video list", Toast.LENGTH_SHORT).show()
+                Toast.makeText(application, "No network, trailer could not be load", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {

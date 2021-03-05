@@ -9,6 +9,6 @@ interface AllMoviesListDao {
     @Query("SELECT * FROM Movies WHERE type = :type")
     fun getAllMovieWithTypeList(type: String): LiveData<List<MovieModel>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll( videos: List<MovieModel>)
 }
