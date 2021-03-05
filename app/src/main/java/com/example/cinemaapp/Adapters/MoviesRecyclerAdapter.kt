@@ -11,7 +11,7 @@ import com.example.cinemaapp.Models.MovieModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_movie_list.view.*
 
-class MoviesRecyclerAdapter(private val context: Context, private val movies: List<MovieModel> = ArrayList()) :
+class MoviesRecyclerAdapter(private val context: Context, private val movies: List<MovieModel> = ArrayList(), private val type: String) :
     RecyclerView.Adapter<MoviesRecyclerAdapter.ViewHolder>() {
 
     override fun getItemCount() = movies.size
@@ -45,6 +45,8 @@ class MoviesRecyclerAdapter(private val context: Context, private val movies: Li
                 intent.putExtra(VIDEO, movie.video)
                 intent.putExtra(VOTE_AVERAGE, movie.vote_average)
                 intent.putExtra(VOTE_COUNT, movie.vote_count)
+
+                intent.putExtra(TYPE, type)
 
                 context.startActivity(intent)
             }

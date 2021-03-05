@@ -25,6 +25,9 @@ class MovieModel(
     val imdbID: String?,
     val Actors: String?,
     val Director: String?,
-    val Plot: String
+    val Plot: String?,
+    val imdbRating: String?,
+
+    val imdb_id: String?
 
 ) : Serializable

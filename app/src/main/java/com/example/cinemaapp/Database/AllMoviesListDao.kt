@@ -10,5 +10,8 @@ interface AllMoviesListDao {
     fun getAllMovieWithTypeList(type: String): LiveData<List<MovieModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll( videos: List<MovieModel>)
+    fun insertAll(videos: List<MovieModel>)
+
+    @Update()
+    fun update(movie: MovieModel)
 }

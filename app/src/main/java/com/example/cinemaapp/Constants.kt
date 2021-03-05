@@ -14,6 +14,8 @@ const val VIDEO = "VIDEO"
 const val VOTE_AVERAGE = "VOTE_AVERAGE"
 const val VOTE_COUNT = "VOTE_COUNT"
 
+const val TYPE = "TYPE"
+
 const val COMPLETE_POSTER_PATH = "COMPLETE_POSTER_PATH"
 
 //To database

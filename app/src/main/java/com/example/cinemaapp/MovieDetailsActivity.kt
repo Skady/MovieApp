@@ -33,7 +33,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         })
 
         favButton.setOnClickListener {
-            val selectedMovie = getSelectedMovie()
+            val selectedMovie = getSelectedMovie("","","","","", TYPE_FAVORITE_MOVIE)
             if(isInDB) {
                 favButton.background = AppCompatResources.getDrawable(this, R.drawable.ic_favorite_grey_24)
                 viewModel.removeMovieFromFavList(selectedMovie)
@@ -46,7 +46,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         showMovie()
     }
 
-    private fun getSelectedMovie(): MovieModel {
+    private fun getSelectedMovie(imbdID: String, Actors: String, Director: String, Rating: String, Plot: String, Type: String): MovieModel {
         val id: String = intent.getStringExtra(ID) as String;
 
         val selectedMovie = MovieModel(
@@ -63,7 +63,8 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.getStringExtra(VIDEO),
             intent.getStringExtra(VOTE_AVERAGE),
             intent.getStringExtra(VOTE_COUNT),
-            TYPE_FAVORITE_MOVIE, "", "", "", ""
+            Type,
+            imbdID, Actors, Director, Plot, Rating, imbdID
         )
         return selectedMovie
     }
@@ -97,6 +98,10 @@ class MovieDetailsActivity : AppCompatActivity() {
             })
         })
 
+        imdbRatingDetailTextView.setText("")
+        directorDetailTextView.setText("")
+        castDetailTextView.setText("")
+
         viewModel.getMovieImdbID(movieID as String)
         viewModel.selectedMovieImdb_ID.observe(this, Observer {
 
@@ -104,9 +109,21 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             viewModel.getMovieDetailOMDB(imdbID as String)
             viewModel.selectedMovieDetail.observe(this, Observer {
-                imdbRatingDetailTextView.setText(it.imdbID)
+                imdbRatingDetailTextView.setText(it.imdbRating)
                 directorDetailTextView.setText(it.Director)
                 castDetailTextView.setText(it.Actors)
+
+                //update movie
+                val type = intent.getStringExtra(TYPE)
+                val selectedMovieToUpdate = getSelectedMovie(
+                        it.imdbID as String,
+                        it.Actors as String,
+                        it.Director as String,
+                        it.Plot as String,
+                        it.imdbRating as String,
+                        type as String
+                )
+                viewModel.updateAdditionalInfo(selectedMovieToUpdate)
             })
         })
     }

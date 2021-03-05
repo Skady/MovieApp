@@ -46,4 +46,8 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     fun getMovieDetailOMDB(imdbID: String) {
         repositoryAllMovies.getMovieDetailOMDB(imdbID)
     }
+
+    fun updateAdditionalInfo(movie: MovieModel) {
+        repositoryAllMovies.updateAdditionalInfo(movie)
+    }
 }

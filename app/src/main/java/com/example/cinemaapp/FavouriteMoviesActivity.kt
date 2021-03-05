@@ -30,7 +30,7 @@ class FavouriteMoviesActivity : AppCompatActivity() {
         viewModel.loadFavouriteMovieList()
 
         viewModel.favouriteMovieList.observe(this, Observer {
-            recyclerListMyFavouriteMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListMyFavouriteMovies.adapter = MoviesRecyclerAdapter(this, it, TYPE_FAVORITE_MOVIE)
             recyclerListMyFavouriteMovies.layoutManager = favouriteMoviesLayoutManager
         })
     }

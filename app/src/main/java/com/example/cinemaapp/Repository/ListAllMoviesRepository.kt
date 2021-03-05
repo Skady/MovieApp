@@ -49,7 +49,7 @@ class ListAllMoviesRepository(val application: Application) {
                 it.video,
                 it.vote_average,
                 it.vote_count,
-                type,"","","",""
+                type,"","","","", "",""
             )
         }
     }
@@ -134,11 +134,11 @@ class ListAllMoviesRepository(val application: Application) {
         RetrofitClient.buildServiceIMDB(MoviesAPI::class.java).geMovieDetailFromIMDB(movieID).enqueue(object :
             Callback<MovieModel> {
             override fun onFailure(call: Call<MovieModel>, t: Throwable) {
-                TODO("Not yet implemented")
+                Toast.makeText(application, "No network, no movie additional details could not be load", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<MovieModel>, response: Response<MovieModel>) {
-                selectedMovieImdb_ID.value = response.body()?.imdbID
+                selectedMovieImdb_ID.value = response.body()?.imdb_id
             }
 
         })
@@ -155,5 +155,11 @@ class ListAllMoviesRepository(val application: Application) {
                 selectedMovieDetail.value = response.body()
             }
         })
+    }
+
+    fun updateAdditionalInfo(movie: MovieModel) {
+        CoroutineScope(Dispatchers.IO).launch {
+            databaseAllMovies.allMoviesDao().update(movie)
+        }
     }
 }

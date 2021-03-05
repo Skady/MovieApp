@@ -92,7 +92,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         viewModel.loadPopularMovieList()
 
         viewModel.popularMovieList.observe(this, Observer {
-            recyclerListPopularMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListPopularMovies.adapter = MoviesRecyclerAdapter(this, it, TYPE_POPULAR_MOVIE)
             recyclerListPopularMovies.layoutManager = popularMoviesLayoutManager
         })
     }
@@ -101,7 +101,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         viewModel.loadTopRatedMovieList()
 
         viewModel.topRatedMovieList.observe(this, Observer {
-            recyclerListTopRatedMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListTopRatedMovies.adapter = MoviesRecyclerAdapter(this, it, TYPE_TOP_RATED_MOVIE)
             recyclerListTopRatedMovies.layoutManager = topRatedMoviesLayoutManager
         })
     }
@@ -110,7 +110,7 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         viewModel.loadUpcomingMovieList()
 
         viewModel.upcomingMovieList.observe(this, Observer {
-            recyclerListUpcomingMovies.adapter = MoviesRecyclerAdapter(this, it)
+            recyclerListUpcomingMovies.adapter = MoviesRecyclerAdapter(this, it, TYPE_UPCOMING_MOVIE)
             recyclerListUpcomingMovies.layoutManager = upcomingMoviesLayoutManager
         })
     }
