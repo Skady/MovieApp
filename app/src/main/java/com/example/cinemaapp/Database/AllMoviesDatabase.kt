@@ -7,15 +7,15 @@ import androidx.room.RoomDatabase
 import com.example.cinemaapp.Models.MovieModel
 
 @Database(entities = [MovieModel::class], version = 3)
-abstract class AppDatabase : RoomDatabase() {
+abstract class AllMoviesDatabase : RoomDatabase() {
 
-    abstract fun favMoviesDao(): FavouriteMovieListDao
+    abstract fun allMoviesDao(): AllMoviesListDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: AllMoviesDatabase? = null
 
-        fun getDatabase(context: Context): AppDatabase {
+        fun getDatabase(context: Context): AllMoviesDatabase {
             val tempInstance = INSTANCE
 
             if (tempInstance != null) {
@@ -25,8 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
-                    "app_database"
+                    AllMoviesDatabase::class.java,
+                    "all_movies_database"
                 ).fallbackToDestructiveMigration().build()
 
                 INSTANCE = instance

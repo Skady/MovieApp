@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "favMovies", primaryKeys = ["id"])
+@Entity(tableName = "Movies", primaryKeys = ["id"])
 class MovieModel(
     val adult: String?,
     val backdrop_path: String?,
@@ -20,7 +20,5 @@ class MovieModel(
     val video: String?,
     val vote_average: String?,
     val vote_count: String?,
-
-    val type:String?
-
+    val type: String?
 ) : Serializable

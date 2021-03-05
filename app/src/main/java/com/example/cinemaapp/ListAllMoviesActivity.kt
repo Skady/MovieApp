@@ -19,6 +19,7 @@ import com.example.cinemaapp.Adapters.MoviesRecyclerAdapter
 import androidx.lifecycle.Observer
 import com.example.cinemaapp.ViewModels.ListAllMoviesViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.content_main_list_all_movies.*
 
 class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +43,9 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Stetho.initializeWithDefaults(this);
+
         setContentView(R.layout.activity_list_all_movies)
 
         context = this@ListAllMoviesActivity
@@ -71,32 +75,12 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
         navView.setNavigationItemSelectedListener(this)
 
-        if(FIRST_TIME == 0) {
-            //fillMap()
-            FIRST_TIME = 1
-        }
-
         getInformationFromAPI()
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
     }
-/*
-    private fun fillMap() {
-        val database = AppDatabase.getDatabase(this)
-        database.favMoviesDao().getAll().observe(this, Observer {
-            DataManager.movies.clear();
-            val unique = HashMap<String, Boolean>()
 
-            for(movie in it) {
-                if (unique.contains(movie.title) == false) {
-                    DataManager.movies.add(movie)
-                    unique.put(movie.title.toString(), true)
-                }
-            }
-        })
-    }
-*/
     private fun getInformationFromAPI() {
         getPopularMoviesList()
         getTopRatedMoviesList()
