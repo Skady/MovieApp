@@ -12,7 +12,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_details.*
 
-
 class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MovieDetailViewModel
@@ -64,7 +63,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.getStringExtra(VIDEO),
             intent.getStringExtra(VOTE_AVERAGE),
             intent.getStringExtra(VOTE_COUNT),
-            TYPE_FAVORITE_MOVIE
+            TYPE_FAVORITE_MOVIE, ""
         )
         return selectedMovie
     }
@@ -97,15 +96,18 @@ class MovieDetailsActivity : AppCompatActivity() {
                 }
             })
         })
-        //TODO get movie detail from IMDB
-        //for movie detail
-        val imdbID = "tt3896198"
 
-        viewModel.getMovieDetailOMDB(imdbID as String)
-        viewModel.selectedMovieDetail.observe(this, Observer {
-            imdbRatingDetailTextView.setText(it.imdbRating)
-            directorDetailTextView.setText(it.Director)
-            castDetailTextView.setText(it.Actors)
+        viewModel.getMovieImdbID(movieID as String)
+        viewModel.selectedMovieImdb_ID.observe(this, Observer {
+
+            val imdbID = it
+
+            viewModel.getMovieDetailOMDB(imdbID as String)
+            viewModel.selectedMovieDetail.observe(this, Observer {
+                imdbRatingDetailTextView.setText(it.imdbRating)
+                directorDetailTextView.setText(it.Director)
+                castDetailTextView.setText(it.Actors)
+            })
         })
     }
 }

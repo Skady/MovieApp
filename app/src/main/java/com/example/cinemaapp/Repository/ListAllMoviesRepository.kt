@@ -30,6 +30,8 @@ class ListAllMoviesRepository(val application: Application) {
 
     val selectedMovieTrailerID = MutableLiveData<String>()
 
+    val selectedMovieImdb_ID = MutableLiveData<String>()
+
     private val databaseAllMovies = AllMoviesDatabase.getDatabase(application)
 
     private fun mapToAddType(movieList: List<MovieModel>, type: String) : List<MovieModel> {
@@ -48,7 +50,8 @@ class ListAllMoviesRepository(val application: Application) {
                 it.video,
                 it.vote_average,
                 it.vote_count,
-                type
+                type,
+                    ""
             )
         }
     }
@@ -129,8 +132,22 @@ class ListAllMoviesRepository(val application: Application) {
         })
     }
 
+    fun getMovieImdbID(movieID: String) {
+        RetrofitClient.buildServiceIMDB(MoviesAPI::class.java).geMovieDetailFromIMDB(movieID).enqueue(object :
+            Callback<MovieModel> {
+            override fun onFailure(call: Call<MovieModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call<MovieModel>, response: Response<MovieModel>) {
+                selectedMovieImdb_ID.value = response.body()?.imdb_id
+            }
+
+        })
+    }
+
     fun getMovieDetailOMDB(imdbID: String) {
-        RetrofitClient.buildServiceOMDB(MoviesAPI::class.java).getMovieCompleteDetail(imdbID, "41bd1bcf").enqueue(object :
+        RetrofitClient.buildServiceOMDB(MoviesAPI::class.java).getMovieDetailFromOMDB(imdbID, "41bd1bcf").enqueue(object :
             Callback<MovieDetail> {
             override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
                 Toast.makeText(application, "Movie detail could not be found", Toast.LENGTH_SHORT).show()

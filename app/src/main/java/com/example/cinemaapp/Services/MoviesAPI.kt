@@ -1,6 +1,7 @@
 package com.example.cinemaapp.Services
 
 import com.example.cinemaapp.Models.MovieDetail
+import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
 import com.example.cinemaapp.Models.VideoResponse
 import retrofit2.Call
@@ -21,6 +22,9 @@ interface MoviesAPI {
     @GET("movie/{movieID}/videos?api_key=dc727792d53fac39b6e09ce16833db99&language=en-US")
     fun getVideosList(@Path("movieID") movieID: String): Call<VideoResponse>
 
+    @GET("movie/{movieID}?api_key=dc727792d53fac39b6e09ce16833db99&language=en-US")
+    fun geMovieDetailFromIMDB(@Path("movieID") movieID: String): Call<MovieModel>
+
     @GET("/")
-    fun getMovieCompleteDetail(@Query("i") i: String, @Query("apikey") apikey: String): Call<MovieDetail>
+    fun getMovieDetailFromOMDB(@Query("i") i: String, @Query("apikey") apikey: String): Call<MovieDetail>
 }

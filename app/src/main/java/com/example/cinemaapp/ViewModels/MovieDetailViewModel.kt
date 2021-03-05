@@ -14,13 +14,16 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
 
     val selectedMovieIsInDB: LiveData<Boolean>
     val selectedMovieTrailerID: LiveData<String>
-
+    val selectedMovieImdb_ID: LiveData<String>
     val selectedMovieDetail: LiveData<MovieDetail>
+
+
 
     init {
         this.selectedMovieIsInDB = repository.selectedMovieIsInDB
         this.selectedMovieTrailerID = repositoryAllMovies.selectedMovieTrailerID
-        this.selectedMovieDetail =repositoryAllMovies.selectedMovieDetail
+        this.selectedMovieDetail = repositoryAllMovies.selectedMovieDetail
+        this.selectedMovieImdb_ID = repositoryAllMovies.selectedMovieImdb_ID
     }
 
     fun addMovieToFavList(movie: MovieModel) {
@@ -37,6 +40,10 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getTrailerKey(movieID: String) {
         repositoryAllMovies.getTrailerKey(movieID)
+    }
+
+    fun getMovieImdbID(movieID: String) {
+        repositoryAllMovies.getMovieImdbID(movieID)
     }
 
     fun getMovieDetailOMDB(imdbID: String) {
