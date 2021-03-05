@@ -6,14 +6,14 @@ import com.example.cinemaapp.Models.MovieModel
 
 @Dao
 interface FavouriteMovieListDao {
-    @Query("SELECT * FROM favMovies")
+    @Query("SELECT * FROM favMovies WHERE type = 'FAVOURITE_MOVIE'")
     fun getAll(): LiveData<List<MovieModel>>
 
     @Query("SELECT * FROM favMovies WHERE title = :title")
     fun getOne(title: String): LiveData<MovieModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg movie: MovieModel)
+    fun insert(movie: MovieModel)
 
     @Query("SELECT EXISTS (SELECT 1 FROM favMovies WHERE title = :title)")
     fun exists(title: String): LiveData<Boolean>

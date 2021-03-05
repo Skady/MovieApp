@@ -16,4 +16,12 @@ const val VOTE_COUNT = "VOTE_COUNT"
 
 const val COMPLETE_POSTER_PATH = "COMPLETE_POSTER_PATH"
 
+//To database
+const val TYPE_FAVORITE_MOVIE: String = "FAVOURITE_MOVIE"
+const val TYPE_POPULAR: String = "POPULAR"
+const val TYPE_TOP_RATED: String = "TOP_RATED"
+const val TYPE_UPCOMING: String = "UPCOMING"
+
+
+
 var FIRST_TIME = 0

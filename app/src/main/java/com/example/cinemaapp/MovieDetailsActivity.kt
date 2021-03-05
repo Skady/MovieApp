@@ -63,7 +63,8 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.getStringExtra(TITLE),
             intent.getStringExtra(VIDEO),
             intent.getStringExtra(VOTE_AVERAGE),
-            intent.getStringExtra(VOTE_COUNT)
+            intent.getStringExtra(VOTE_COUNT),
+            TYPE_FAVORITE_MOVIE
         )
         return selectedMovie
     }

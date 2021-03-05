@@ -19,5 +19,8 @@ class MovieModel(
     val title: String?,
     val video: String?,
     val vote_average: String?,
-    val vote_count: String?
+    val vote_count: String?,
+
+    val type:String?
+
 ) : Serializable
