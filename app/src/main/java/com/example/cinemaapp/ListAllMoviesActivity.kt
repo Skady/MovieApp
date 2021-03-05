@@ -61,11 +61,13 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         //val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        /*appBarConfiguration = AppBarConfiguration(
+        /*
+        appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_fav, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_fav, R.id.nav_search
             ), drawerLayout
-        )*/
+        )
+         */
         //val toggle = ActionBarDrawerToggle (this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         //drawerLayout.addDrawerListener(toggle)
         //toggle.syncState()
@@ -133,6 +135,10 @@ class ListAllMoviesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             }
             R.id.nav_fav -> {
                 val intentFavourite = Intent(this, FavouriteMoviesActivity::class.java)
+                startActivity(intentFavourite)
+            }
+            R.id.nav_search -> {
+                val intentFavourite = Intent(this, SearchMovieActivity::class.java)
                 startActivity(intentFavourite)
             }
         }

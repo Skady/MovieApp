@@ -12,5 +12,9 @@
             android:id="@+id/nav_fav"
             android:icon="@drawable/ic_favorite_black_24"
             android:title="@string/menu_fav" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_favorite_black_24"
+            android:title="@string/menu_search" />
     </group>
 </menu>

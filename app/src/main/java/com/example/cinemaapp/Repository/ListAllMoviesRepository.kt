@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.cinemaapp.Database.AllMoviesDatabase
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
+import com.example.cinemaapp.Models.SearchResponse
 import com.example.cinemaapp.Models.VideoResponse
 import com.example.cinemaapp.Services.MoviesAPI
 import com.example.cinemaapp.Services.RetrofitClient
@@ -24,6 +25,8 @@ class ListAllMoviesRepository(val application: Application) {
     val popularMovieList = MutableLiveData<List<MovieModel>>()
     val topRatedMoviesList = MutableLiveData<List<MovieModel>>()
     val upcomingMoviesList = MutableLiveData<List<MovieModel>>()
+
+    val searchResponseMoviesList = MutableLiveData<List<MovieModel>>()
 
     val selectedMovieDetail = MutableLiveData<MovieModel>()
 
@@ -161,5 +164,22 @@ class ListAllMoviesRepository(val application: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             databaseAllMovies.allMoviesDao().update(movie)
         }
+    }
+
+    fun searchMovie(title: String) {
+        RetrofitClient.buildServiceOMDB(MoviesAPI::class.java).searchMovieFromOMDB(title, "41bd1bcf").enqueue(object :
+            Callback<SearchResponse> {
+            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                Toast.makeText(application, "Movie search could not be found", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(
+                call: Call<SearchResponse>,
+                response: Response<SearchResponse>
+            ) {
+                searchResponseMoviesList.value = response.body()?.results
+            }
+
+        })
     }
 }

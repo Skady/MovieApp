@@ -2,6 +2,7 @@ package com.example.cinemaapp.Services
 
 import com.example.cinemaapp.Models.MovieModel
 import com.example.cinemaapp.Models.MovieResponse
+import com.example.cinemaapp.Models.SearchResponse
 import com.example.cinemaapp.Models.VideoResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -26,4 +27,7 @@ interface MoviesAPI {
 
     @GET("/")
     fun getMovieDetailFromOMDB(@Query("i") i: String, @Query("apikey") apikey: String): Call<MovieModel>
+
+    @GET("/")
+    fun searchMovieFromOMDB(@Query("s") s: String, @Query("apikey") apikey: String): Call<SearchResponse>
 }
